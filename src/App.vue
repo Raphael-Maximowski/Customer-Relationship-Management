@@ -32,7 +32,6 @@ watch(route, (newRoute) => {
   }
 })
 
-const teste = true
 </script>
 
 <template>
@@ -41,7 +40,6 @@ const teste = true
     <div class="flex-grow-1 body-content">
       <RouterView v-if="userConfigWidth < 992" />
     </div>
-    <CreateOrUpdateFunnel :isModalVisible="teste" />
   </div>
 </template>
 

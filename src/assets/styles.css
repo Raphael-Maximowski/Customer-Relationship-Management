@@ -1,0 +1,8 @@
+.modal-background {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1px solid lightgray;
+}

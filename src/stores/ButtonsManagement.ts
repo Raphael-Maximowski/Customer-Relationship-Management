@@ -10,7 +10,6 @@ export const buttonsManagementStore = defineStore('buttonsManagement', () => {
 
   const handleButtonState = (buttonMessage) => {
     buttonState.message = buttonMessage
-    console.log("New Message: ", buttonState.message)
   }
 
   return { handleButtonState, buttonData }

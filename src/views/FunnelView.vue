@@ -1,17 +1,13 @@
 <script setup lang="ts">
 
 import FunnelCard from '@/components/Cards/funnelCard.vue'
-import { userConfigStore } from '@/stores/userConfig.ts'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import CreateOrUpdateFunnel from '@/components/Modals/CreateOrUpdateFunnel.vue'
 
-const userConfig = userConfigStore()
-const userConfigWidth = computed(() => userConfig.userWidth)
 const funnelsStore = funnelsManagementStore()
 const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
 
-const teste = ref(true)
 </script>
 <template>
   <div class="w-100 h-100 ">
@@ -27,7 +23,7 @@ const teste = ref(true)
         :funnelData="funnelData"
       />
     </div>
-    <CreateOrUpdateFunnel :isModalVisible="teste" />
+    <CreateOrUpdateFunnel :modalState="modalState" />
   </div>
 </template>
 
