@@ -1,9 +1,13 @@
 <script setup lang="ts">
-
 import { userConfigStore } from '@/stores/userConfig.ts'
+import { buttonsManagementStore } from '@/stores/ButtonsManagement.ts'
 import { computed, ref } from 'vue'
+import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 
 const userConfig = userConfigStore()
+const buttonsManagement = buttonsManagementStore()
+const buttonMessage = computed(() => buttonsManagement.buttonData)
+const modalsManagement = modalsManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
 const sideBarState = ref(false)
 const dropUpState = ref(false)
@@ -81,6 +85,11 @@ const RouterOptions = [
   }
 ]
 
+
+const handleModalState = () => {
+  modalsManagement.handleModalState({ action: buttonMessage.value })
+}
+
 </script>
 
 <template>
@@ -151,15 +160,16 @@ const RouterOptions = [
       </div>
     </aside>
     <div class="d-flex flex-column w-100">
-      <header class="header-content d-flex align-items-center ">
+      <header class="header-content justify-content-between d-flex align-items-center ">
         <div class="ms-5">
           <h2 class="fs-4 text-primary fw-bold">Welcome User</h2>
           <h3 class="fs-5 text-primary fw-bold">We Wish you a awesome experience</h3>
         </div>
+        <button @click="handleModalState"  type="button" class="btn btn-primary mx-5 px-5"> {{ buttonMessage }} </button>
       </header>
-      <body>
+      <div class="flex-grow-1 modal-content">
       <RouterView v-if="userConfigWidth > 992" />
-      </body>
+      </div>
     </div>
 
   </div>
@@ -210,6 +220,10 @@ const RouterOptions = [
 </template>
 
 <style scoped>
+.modal-content {
+  background-color: #EBEBEB;
+}
+
 .drop-up {
   width: 210px;
   bottom: 60px;

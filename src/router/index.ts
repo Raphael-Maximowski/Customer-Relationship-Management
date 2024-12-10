@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'funnelsView',
       component: () => import('../views/FunnelView.vue'),
     },
   ],
