@@ -11,7 +11,6 @@ export const modalsManagementStore = defineStore('modalsManagement', () => {
   })
 
   const handleModalState = (modalPayload) => {
-     console.log("Modal Payload Received: ", modalPayload)
     if (!modalPayload) {
       modalInformation.modalState = false
       modalInformation.modalView = ''
@@ -27,7 +26,6 @@ export const modalsManagementStore = defineStore('modalsManagement', () => {
         modalPayload.modalData ? modalInformation.modalData = modalPayload.modalData : modalInformation.modalData = {}
         modalPayload.editMode ? modalInformation.editMode = modalPayload.editMode : modalInformation.editMode = false
 
-        console.log("Modal Last STate: ", modalInformation)
         break;
     }
   }

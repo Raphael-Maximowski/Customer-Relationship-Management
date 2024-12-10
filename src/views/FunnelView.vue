@@ -1,17 +1,20 @@
 <script setup lang="ts">
 
-import FunnelCard from '@/components/Cards/funnelCard.vue'
+import FunnelCard from '@/components/Cards/FunnelCard.vue'
 import { computed } from 'vue'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import CreateOrUpdateFunnel from '@/components/Modals/CreateOrUpdateFunnel.vue'
+import { userConfigStore } from '@/stores/userConfig.ts'
 
 const funnelsStore = funnelsManagementStore()
 const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
+const userConfig = userConfigStore()
+const userConfigWidth = computed(() => userConfig.userWidth)
 
 </script>
 <template>
   <div class="w-100 h-100 ">
-    <div class="cards-container mx-5 my-3 d-flex flex-wrap">
+    <div class="cards-container px-5 py-3 d-flex flex-wrap">
       <FunnelCard
         :style="{
         flex: userConfigWidth < 700 ? '1 1 calc(100% - 16px)' : userConfigWidth < 1300 ? '1 1 calc(50% - 50px)' : '1 1 calc(33.3% - 50px)',
@@ -27,7 +30,7 @@ const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
   </div>
 </template>
 
-<style>
+<style scoped>
 .cards-container {
   gap: 16px;
 }

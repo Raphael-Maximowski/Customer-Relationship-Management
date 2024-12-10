@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { useRouter } from 'vue-router'
 
 const modalManagement = modalsManagementStore()
 const funnelsManagement = funnelsManagementStore()
-
+const router = useRouter()
 const props = defineProps({
   funnelData: { type: Object, required: true }
 })
@@ -16,6 +17,10 @@ const dropDownState = ref(false)
 
 const handleDropDownState = () => {
   dropDownState.value = !dropDownState.value
+}
+
+const routeToSteps = () => {
+  router.push({ name: 'CRMStepsView', params: { id: funnelData.id } })
 }
 
 const handleModalState = () => {
@@ -48,7 +53,7 @@ const duplicateFunnel = () => {
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div @click="routeToSteps" class="card-body">
       <div class="">
         <div class="d-flex mx-1 align-items-center justify-content-between ">
           <h4 class="fs-6 text-primary fw-bold m-0">{{ funnelData.name }}</h4>
