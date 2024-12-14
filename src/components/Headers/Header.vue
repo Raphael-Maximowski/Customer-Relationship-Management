@@ -1,12 +1,42 @@
 <script setup>
-import { userConfigStore } from '@/stores/userConfig.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 import { computed, ref } from 'vue'
+import { headerManagementStore } from '@/stores/headerManagement.ts'
+import { modalsManagementStore } from '@/stores/modalsManagement.ts'
+
+import { useRoute, useRouter } from 'vue-router'
+import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.ts'
 
 const userConfig = userConfigStore()
+const stepStore = stepsManagementStore()
+const toastStore = toastManagementStore()
+const router = useRouter()
+const headerStore = headerManagementStore()
+const headerConfigData = computed(() => headerStore.headerDataGetter)
+const modalsStore = modalsManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
+const route = useRoute()
+
 const mobileHeaderState = ref(false)
 const handleMobileHeaderState = () => {
   mobileHeaderState.value = !mobileHeaderState.value
+}
+
+const dispatchButtonAction = async () => {
+  if (headerConfigData.value.action === 'Create Contact') {
+    const isStepEmpty = await stepStore.isFunnelEmpty(route.params.id)
+    if (isStepEmpty) {
+      toastStore.errorToast("Create At Least One Step!")
+      return
+    }
+  }
+  modalsStore.handleModalState( { action: headerConfigData.value.action } )
+}
+
+const handleUserRoute = (routeToPush) => {
+  router.push({ name: routeToPush.routeName })
+  handleMobileHeaderState()
 }
 
 const RouterOptions = [
@@ -83,23 +113,26 @@ const RouterOptions = [
     <div class="w-50 d-flex flex-column justify-content-center h-100
 ">
         <p class="ms-5 text-primary m-0 fs-4 fw-bold">Welcome User</p>
-      <p class="ms-5 fs-4 m-0 text-primary fw-bold">Instructions to DO Everything bla bla bla</p>
+      <p class="ms-5 fs-4 m-0 text-primary fw-bold"> {{ headerConfigData.headerMessage }} </p>
     </div>
     <div class="w-25 h-100 d-flex align-items-center">
       <input placeholder="Input MockUp" class="form-control py-2 w-100" />
     </div>
-    <div class="w-25 h-100 d-flex align-items-center justify-content-around">
-      <button type="button" class="btn btn-primary fs-6 w-50 py-2 ">Primary</button>
+    <div class="w-25 h-100 d-flex align-items-center justify-content-center">
+      <button @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
     </div>
   </div>
 
   <div v-else >
-    <div class="flex-column mb-5 text-center d-flex align-items-center justify-content-center mobile-header bg-primary">
+    <div class="flex-column  text-center d-flex align-items-center justify-content-center mobile-header bg-primary">
       <h1 class="text-white title">CUSTOMER RELATIONSHIP</h1>
       <h2 class="text-white sub-title">MANAGEMENT</h2>
       <button style="top: 10px; left: 10px" class="position-absolute border-0 bg-transparent">
         <i @click="handleMobileHeaderState" class="bi bi-list fs-2 text-white"></i>
       </button>
+    </div>
+    <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
+      <button @click="dispatchButtonAction" type="button" class="ms-5 btn px-5 btn-primary"> {{ headerConfigData.buttonMessage }} </button>
     </div>
     <div v-if="mobileHeaderState" class="d-flex align-items-center flex-column mobile-header-body position-absolute bg-primary w-100 z-3">
       <div class="w-75">
@@ -113,6 +146,7 @@ const RouterOptions = [
             <p class="m-0 text-white fs-6">{{ routerOption.name }}</p>
           </div>
           <div
+            @click="handleUserRoute(option)"
             v-for="option in routerOption.router"
             class="py-2 d-flex align-items-center router router-option mx-5 ">
             <i :class="[option.icon, 'text-white me-4 fs-5 ']"></i>
@@ -125,6 +159,7 @@ const RouterOptions = [
 </template>
 
 <style scoped>
+
 .router-option {
   border-bottom: 1px solid white;
 }

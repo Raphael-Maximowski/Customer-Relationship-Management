@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
+import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 const toastManagement = toastManagementStore()
+const stepsStore = stepsManagementStore()
 
 export const funnelsManagementStore = defineStore('funnelsManagement', () => {
   const funnelsData = reactive({
     funnelsInArray: [
       { name: 'Funnel Example', description: 'Created as a Example', id: 1, date: '10/09/2024' },
-      { name: 'Teste1', description: 'OLA OLA OLA OLA', id: 2, date: '10/09/2024' },
     ]
   })
 
@@ -32,7 +33,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
 
     const name = funnelToDuplicate.name
     const description = funnelToDuplicate.description
-    const id = funnelsData.funnelsInArray.length + 1
+    const id = funnelsData.funnelsInArray.length === 0 ? 1 :  funnelsData.funnelsInArray[funnelsData.funnelsInArray.length - 1].id + 1
     created_at = formatDate(created_at)
 
     funnelToPush.value.name = name
@@ -41,6 +42,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     funnelToPush.value.date = created_at
 
     funnelsData.funnelsInArray.push(funnelToPush.value)
+    stepsStore.createStepsForDefaultFunnel(funnelToPush.value.id)
   }
 
   const editFunnel = (funnelEditData) => {
@@ -59,6 +61,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     const index = funnelsData.funnelsInArray.findIndex((funnelInArray) => funnelInArray.id === funnelToDelete.id)
     if (index > -1) {
       funnelsData.funnelsInArray.splice(index, 1)
+      stepsStore.deleteStepOnCascade(funnelToDelete.id)
       toastManagement.succesToast("Funnel Deleted")
       return
     }
@@ -69,7 +72,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
   const createFunnel = (funnelData) => {
     if (!funnelData) return;
     let funnel = funnelData
-    const funnelId = funnelsData.funnelsInArray.length + 1
+    const funnelId = funnelsData.funnelsInArray.length === 0 ? 1 : funnelsData.funnelsInArray[funnelsData.funnelsInArray.length -1].id + 1
     let created_at = new Date();
 
     function formatDate(date) {
@@ -89,6 +92,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     }
 
     funnelsData.funnelsInArray.push(funnel)
+    stepsStore.createStepsForDefaultFunnel(funnel.id)
   }
 
   return { funnelsDataGetter, createFunnel, deleteFunnel, editFunnel, duplicateFunnel }

@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import ContactCard from '@/components/Cards/ContactCard.vue'
+import EmptyStepCard from '@/components/Cards/EmptyStepCard.vue'
 
 const props = defineProps({
   stepInfo: { type: Object, required: true }
@@ -9,6 +12,10 @@ const props = defineProps({
 
 const stepsManagement = stepsManagementStore()
 const toastManagement = toastManagementStore()
+const contactsStore = contactsManagementStore()
+const contactsData = computed(() =>
+  contactsStore.getFilteredContacts(props.stepInfo.id)
+)
 const newStepName = ref('')
 const editStepState = ref(false)
 
@@ -23,14 +30,13 @@ const editStepName = () => {
 }
 
 const deleteStep = () => {
-  stepsManagement.deleteStep(props.stepInfo)
+  stepsManagement.deleteStep(props.stepInfo.id)
   handleEditStepState()
 }
 
 const handleEditStepState = () => {
   editStepState.value = !editStepState.value
 }
-
 
 </script>
 
@@ -42,15 +48,21 @@ const handleEditStepState = () => {
         <i @click="handleEditStepState" class="bi bi-three-dots-vertical"></i>
       </div>
       <div v-else class="w-100 d-flex justify-content-between">
-        <input @keyup.enter="editStepName" v-model="newStepName" placeholder="Insert the new Name" class="text-white border-0 bg-transparent form-control w-75" />
+        <input @keyup.enter="editStepName" v-model="newStepName" placeholder="Insert the new Name"
+               class="text-white border-0 bg-transparent form-control w-75" />
         <div class="d-flex align-items-center justify-content-around w-25">
           <i @click="handleEditStepState" class="bi bi-x-circle"></i>
           <i @click="deleteStep" class="bi bi-trash3"></i>
         </div>
       </div>
     </div>
-    <div class=" steps-body flex-grow-1 mb-5">
-
+    <div class=" steps-body overflow-y-auto flex-grow-1 mb-5">
+      <EmptyStepCard v-if="contactsData.length === 0" />
+      <ContactCard
+        :key="contactData.id"
+        v-for="contactData in contactsData"
+        :contactData="contactData"
+      />
     </div>
   </div>
 </template>
@@ -66,7 +78,7 @@ const handleEditStepState = () => {
 }
 
 .steps-header {
-  height: 60px;
+  min-height: 60px;
   border-radius: 10px 10px 0px 0px;
 }
 
