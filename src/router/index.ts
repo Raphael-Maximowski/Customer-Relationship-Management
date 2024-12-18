@@ -12,7 +12,7 @@ const router = createRouter({
       path: '/steps/:id',
       name: 'CRMStepsView',
       component: () => import('../views/CRMStepsView.vue')
-    }
+    },
   ],
 })
 

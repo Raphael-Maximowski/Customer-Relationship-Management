@@ -27,6 +27,14 @@ export const modalsManagementStore = defineStore('modalsManagement', () => {
         modalPayload.editMode ? modalInformation.editMode = modalPayload.editMode : modalInformation.editMode = false
 
         break;
+      case 'Create Contact':
+        modalInformation.modalState = true
+        modalInformation.modalView = 'CreateOrUpdateContact'
+
+
+        modalPayload.modalData ? modalInformation.modalData = modalPayload.modalData : modalInformation.modalData = {}
+        modalPayload.editMode ? modalInformation.editMode = modalPayload.editMode : modalInformation.editMode = false
+        break
     }
   }
 

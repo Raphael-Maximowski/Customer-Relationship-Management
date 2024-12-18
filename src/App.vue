@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import Sidebar from '@/components/SideBars/Sidebar.vue'
-import { userConfigStore } from '@/stores/userConfig.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 import { computed, onMounted, onUnmounted, watch } from 'vue'
-import { buttonsManagementStore } from '@/stores/buttonsManagement.ts'
-import CreateOrUpdateFunnel from '@/components/Modals/CreateOrUpdateFunnel.vue'
 import Header from '@/components/Headers/Header.vue'
+import { headerManagementStore } from '@/stores/headerManagement.ts'
+import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 
 const userConfig = userConfigStore()
+const stepStore = stepsManagementStore()
+const headerStore = headerManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
-const buttonsManagement = buttonsManagementStore()
 const route = useRoute()
+
 
 const updateUserViewPort = () => {
   userConfig.setUserviewPortWith(window.innerWidth)
@@ -26,13 +28,15 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateUserViewPort);
 })
 
+
 watch(route, (newRoute) => {
   switch (newRoute.name){
     case 'funnelsView':
-      buttonsManagement.handleButtonState('Create Funnel')
+      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel' })
       break;
     case 'CRMStepsView':
-      buttonsManagement.handleButtonState('Create Contact')
+      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact' })
+      break;
   }
 })
 
