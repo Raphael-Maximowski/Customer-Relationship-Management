@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { userConfigStore } from '@/stores/userConfig.ts'
-import { buttonsManagementStore } from '@/stores/buttonsManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { buttonsManagementStore } from '@/stores/headerManagement.ts'
 import { computed, ref } from 'vue'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { useRoute, useRouter } from 'vue-router'
 
 const userConfig = userConfigStore()
+const router = useRouter()
 const userConfigWidth = computed(() => userConfig.userWidth)
 const sideBarState = ref(false)
 const dropUpState = ref(false)
@@ -16,6 +17,10 @@ const handleSideBarState = () => {
 
 const handleDropUpState = () => {
   dropUpState.value = !dropUpState.value
+}
+
+const handleSideBarRoute = (routeToPush) => {
+  router.push({ name: routeToPush.routeName })
 }
 
 const RouterOptions = [
@@ -119,6 +124,7 @@ const RouterOptions = [
                v-if="route.name !== 'User Options'"
           >
             <div
+              @click.stop="handleSideBarRoute(option)"
               :style="{ width: sideBarState ? '220px' : '60px' }"
               class="d-flex router-option align-items-center">
               <i :class="[option.icon, 'fs-4 me-4 text-white bg-primary px-3 py-2 rounded-3']"></i>

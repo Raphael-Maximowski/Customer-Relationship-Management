@@ -1,17 +1,28 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { useRouter } from 'vue-router'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const modalManagement = modalsManagementStore()
 const funnelsManagement = funnelsManagementStore()
+const userStore = userConfigStore()
+const userWidth = computed(() => userStore.userWidth)
 const router = useRouter()
 const props = defineProps({
   funnelData: { type: Object, required: true }
 })
 
 const funnelData = props.funnelData
+
+const handleFunnelNameSize = () => {
+  if (userWidth.value < 850 && userWidth.value > 700 && funnelData.name.length > 15) {
+    return funnelData.name.slice(0,12) + '...'
+  } else if (userWidth.value < 450 && funnelData.name.length > 13) {
+    return funnelData.name.slice(0,10) + '...'
+  } else { return funnelData.name }
+}
 
 const dropDownState = ref(false)
 
@@ -56,7 +67,7 @@ const duplicateFunnel = () => {
     <div @click="routeToSteps" class="card-body">
       <div class="">
         <div class="d-flex mx-1 align-items-center justify-content-between ">
-          <h4 class="fs-6 text-primary fw-bold m-0">{{ funnelData.name }}</h4>
+          <h4 class="fs-6 text-primary fw-bold m-0">{{ handleFunnelNameSize()  }}</h4>
           <p class="fs-6 fw-bold text-primary m-0">Code: {{ funnelData.id }}</p>
         </div>
         <div class="my-2 d-flex align-items-center justify-content-between ">
@@ -64,9 +75,12 @@ const duplicateFunnel = () => {
           <button class="bg-transparent border-0"><i @click.stop="handleDropDownState" class="bi py-1 px-2 rounded-2  button-option bg-primary text-white bi-three-dots"></i></button>
         </div>
       </div>
-      <div class="mx-1 pt-4 pb-2">
-        <p class="m-0 text-primary fs-6"> {{ funnelData.description }} </p>
-        <p class="text-end text-primary m-0">{{ funnelData.date }}</p>
+      <div class="mx-1 pt-3 pb-4">
+        <p class="m-0 text-primary fs-6"> {{ funnelData.description.length > 60 ? funnelData.description.slice(0, 60) + '...' : funnelData.description }} </p>
+
+      </div>
+      <div style="bottom: 15px; right: 23px" class="position-absolute">
+        <p class="text-primary m-0">{{ funnelData.date }}</p>
       </div>
     </div>
   </div>
