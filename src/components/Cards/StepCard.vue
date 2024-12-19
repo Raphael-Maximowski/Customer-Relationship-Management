@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
@@ -14,12 +14,13 @@ const props = defineProps({
 const stepsManagement = stepsManagementStore()
 const toastManagement = toastManagementStore()
 const contactsStore = contactsManagementStore()
-const contactsData = contactsStore.getFilteredContacts(props.stepInfo.id)
+const contactsOriginalState = computed(() => contactsStore.contactsState)
+const contactsData = ref(contactsStore.getFilteredContacts(props.stepInfo.id))
 const newStepName = ref('')
 const editStepState = ref(false)
 
-const log = (evt) => {
-
+const log = (evt, stepId) => {
+  contactsStore.orderContacts(evt, stepId)
 }
 
 const editStepName = () => {
@@ -41,10 +42,14 @@ const handleEditStepState = () => {
   editStepState.value = !editStepState.value
 }
 
+watch(contactsOriginalState, (newValue) => {
+  contactsData.value = contactsStore.getFilteredContacts(props.stepInfo.id)
+}, { deep: true } )
+
 </script>
 
 <template>
-  <div class="steps-container col-2 mx-5 d-flex flex-column   h-100">
+  <div class="steps-container mx-5 d-flex flex-column   h-100">
     <div class="px-3  steps-header d-flex text-white align-items-center justify-content-between  w-100 bg-primary">
       <div v-if="!editStepState" class="d-flex justify-content-between w-100">
         <p class="m-0 fs-6 ">{{ stepInfo.name }}</p>
@@ -64,7 +69,9 @@ const handleEditStepState = () => {
       <draggable
         v-model="contactsData"
         group="contactsData"
-
+        :item-key="key => key"
+        @change="event=> log(event, stepInfo.id)"
+        animation="350"
       >
         <template #item="{element}">
           <ContactCard
@@ -83,7 +90,7 @@ const handleEditStepState = () => {
 }
 
 .steps-container {
-  min-width: 300px;
+  min-width: 450px;
   overflow-y: auto;
 }
 

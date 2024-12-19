@@ -23,7 +23,7 @@ const handleCreation = () => {
 </script>
 
 <template>
-  <div class="steps-container col-2 d-flex flex-column  mx-5 h-100">
+  <div class="steps-container d-flex flex-column  mx-5 h-100">
     <div class="px-3 bg-primary steps-header d-flex text-white align-items-center justify-content-between  w-100">
       <p v-if="!createState" class="m-0 fs-6 ">Create New Step</p>
       <div v-else class="d-flex align-items-center justify-content-between w-100">
@@ -52,7 +52,7 @@ const handleCreation = () => {
 }
 
 .steps-container {
-  min-width: 300px;
+  min-width: 450px;
 }
 
 .steps-header {

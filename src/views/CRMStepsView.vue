@@ -2,20 +2,23 @@
 import StepsCard from '@/components/Cards/StepCard.vue'
 import CreateStepCard from '@/components/Cards/CreateStepCard.vue'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 import CreateOrUpdateContact from '@/components/Modals/CreateOrUpdateContact.vue'
 import draggable from 'vuedraggable'
 
 const route = useRoute()
 const stepsStore = stepsManagementStore()
-const stepsData = computed(() =>
-  stepsStore.getSteps(route.params.id)
-)
+const stepsData = ref(stepsStore.getSteps(route.params.id))
+const stepsOriginalState = computed(() => stepsStore.stepsManagementState)
 
-const log = (evt) => {
-  stepsStore.orderSteps(evt)
+const log = (event) => {
+  stepsStore.orderSteps(event)
 }
+
+watch(stepsOriginalState, () => {
+  stepsData.value = stepsStore.getSteps(route.params.id)
+}, { deep: true })
 
 </script>
 
@@ -29,6 +32,8 @@ const log = (evt) => {
       class="d-flex"
       handle=".steps-header"
       @change="event=> log(event)"
+      :item-key="key => key"
+      animation="350"
     >
       <template  #item="{element}">
         <StepsCard

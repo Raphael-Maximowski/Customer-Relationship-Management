@@ -64,7 +64,6 @@ const handleNewStepForContact = (stepData) => {
     contactStep: stepData.id
   })
 
-  console.log("New StepId: ", contactStep.value)
 }
 
 const checkFirstStepWhenMounted = () => {

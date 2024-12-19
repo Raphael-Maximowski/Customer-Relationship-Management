@@ -8,16 +8,43 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
   const stepsDefault = ['No Contact', 'Contact Made', 'Accepted', 'Rejected']
 
   const stepsManagementState = ref([
-    { name: 'No Contact', id: 1, funnelId: 1, stepPostion: 3 },
-    { name: 'Contact Made', id: 2, funnelId: 1, stepPostion: 2 },
-    { name: 'Accepted', id: 3, funnelId: 1, stepPostion: 1 },
-    { name: 'Rejected', id: 4, funnelId: 1, stepPostion: 0 },
+    { name: 'No Contact', id: 1, funnelId: 1, stepPostion: 0 },
+    { name: 'Contact Made', id: 2, funnelId: 1, stepPostion: 1 },
+    { name: 'Accepted', id: 3, funnelId: 1, stepPostion: 2 },
+    { name: 'Rejected', id: 4, funnelId: 1, stepPostion: 3 },
   ])
 
   const getterSteps = computed(() => stepsManagementState.value)
 
   const orderSteps = (draggableData) => {
-    console.log("Data Received: ", draggableData)
+    const steps = getSteps(draggableData.moved.element.funnelId)
+
+    if (draggableData.moved.newIndex > draggableData.moved.oldIndex) {
+      for (let i = 0; i < steps.length; i++) {
+        if (steps[i].stepPostion <= draggableData.moved.newIndex
+          && steps[i].stepPostion !== draggableData.moved.oldIndex
+          && steps[i].stepPostion > draggableData.moved.oldIndex) {
+          const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === steps[i].id)
+          stepsManagementState.value[index].stepPostion = stepsManagementState.value[index].stepPostion - 1
+        }
+        const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === draggableData.moved.element.id)
+        stepsManagementState.value[index].stepPostion = draggableData.moved.newIndex
+      }
+      return
+    }
+
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].stepPostion >= draggableData.moved.newIndex
+        && steps[i].stepPostion !== draggableData.moved.oldIndex
+        && steps[i].stepPostion < draggableData.moved.oldIndex
+      ) {
+        const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === steps[i].id)
+        stepsManagementState.value[index].stepPostion = stepsManagementState.value[index].stepPostion + 1
+      }
+
+      const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === draggableData.moved.element.id)
+      stepsManagementState.value[index].stepPostion = draggableData.moved.newIndex
+    }
   }
 
   const isFunnelEmpty = (funnelId) => {
@@ -79,6 +106,7 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
       id: id
     }
     stepsManagementState.value.push(newStep.value)
+
     toastManagement.succesToast('Step Created with Success!')
   }
 
@@ -91,10 +119,9 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
         stepPostion: i
       })
 
-      console.log("Step Crated: ", payload.value)
       stepsManagementState.value.push(payload.value)
     }
   }
 
   return { orderSteps ,getSteps, editStep, deleteStep, stepsManagementState, createStep, createStepsForDefaultFunnel, deleteStepOnCascade, isFunnelEmpty }
-})
+},   { persist: true } )
