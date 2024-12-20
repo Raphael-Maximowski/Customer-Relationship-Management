@@ -8,13 +8,44 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
   const stepsDefault = ['No Contact', 'Contact Made', 'Accepted', 'Rejected']
 
   const stepsManagementState = ref([
-    { name: 'No Contact', id: 1, funnelId: 1 },
-    { name: 'Contact Made', id: 2, funnelId: 1 },
-    { name: 'Accepted', id: 3, funnelId: 1 },
-    { name: 'Rejected', id: 4, funnelId: 1 },
+    { name: 'No Contact', id: 1, funnelId: 1, stepPostion: 0 },
+    { name: 'Contact Made', id: 2, funnelId: 1, stepPostion: 1 },
+    { name: 'Accepted', id: 3, funnelId: 1, stepPostion: 2 },
+    { name: 'Rejected', id: 4, funnelId: 1, stepPostion: 3 },
   ])
 
   const getterSteps = computed(() => stepsManagementState.value)
+
+  const orderSteps = (draggableData) => {
+    const steps = getSteps(draggableData.moved.element.funnelId)
+
+    if (draggableData.moved.newIndex > draggableData.moved.oldIndex) {
+      for (let i = 0; i < steps.length; i++) {
+        if (steps[i].stepPostion <= draggableData.moved.newIndex
+          && steps[i].stepPostion !== draggableData.moved.oldIndex
+          && steps[i].stepPostion > draggableData.moved.oldIndex) {
+          const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === steps[i].id)
+          stepsManagementState.value[index].stepPostion = stepsManagementState.value[index].stepPostion - 1
+        }
+        const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === draggableData.moved.element.id)
+        stepsManagementState.value[index].stepPostion = draggableData.moved.newIndex
+      }
+      return
+    }
+
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].stepPostion >= draggableData.moved.newIndex
+        && steps[i].stepPostion !== draggableData.moved.oldIndex
+        && steps[i].stepPostion < draggableData.moved.oldIndex
+      ) {
+        const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === steps[i].id)
+        stepsManagementState.value[index].stepPostion = stepsManagementState.value[index].stepPostion + 1
+      }
+
+      const index = stepsManagementState.value.findIndex((StepInArray) => StepInArray.id === draggableData.moved.element.id)
+      stepsManagementState.value[index].stepPostion = draggableData.moved.newIndex
+    }
+  }
 
   const isFunnelEmpty = (funnelId) => {
     const StepsInFunnel = stepsManagementState.value.filter((StepsInArray) => StepsInArray.funnelId == funnelId)
@@ -22,7 +53,9 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
   }
 
   const getSteps = (funnelId) => {
-    return getterSteps.value.filter((StepsInArray) => StepsInArray.funnelId == funnelId)
+    const stepsInStore = getterSteps.value.filter((StepsInArray) => StepsInArray.funnelId == funnelId)
+    const stepsInOrder = stepsInStore.sort((a, b) => a.stepPostion - b.stepPostion)
+    return stepsInOrder
   }
 
   const editStep = (stepPayload) => {
@@ -73,6 +106,7 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
       id: id
     }
     stepsManagementState.value.push(newStep.value)
+
     toastManagement.succesToast('Step Created with Success!')
   }
 
@@ -81,13 +115,13 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
       const payload = ref({
         name: stepsDefault[i],
         id: stepsManagementState.value.length + 1,
-        funnelId: funnelId
+        funnelId: funnelId,
+        stepPostion: i
       })
-
 
       stepsManagementState.value.push(payload.value)
     }
   }
 
-  return { getSteps, editStep, deleteStep, stepsManagementState, createStep, createStepsForDefaultFunnel, deleteStepOnCascade, isFunnelEmpty }
-})
+  return { orderSteps ,getSteps, editStep, deleteStep, stepsManagementState, createStep, createStepsForDefaultFunnel, deleteStepOnCascade, isFunnelEmpty }
+},   { persist: true } )

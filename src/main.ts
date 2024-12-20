@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
 import VueTheMask from 'vue-the-mask'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import 'vue3-toastify/dist/index.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -14,6 +15,7 @@ import router from './router'
 
 const app = createApp(App)
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 app.use(VueTheMask)
 app.use(pinia)
 app.use(router)
