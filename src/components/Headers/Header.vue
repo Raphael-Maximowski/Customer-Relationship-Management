@@ -53,7 +53,7 @@ const RouterOptions = [
       },
       {
         name: 'Contacts',
-        routeName: '',
+        routeName: 'ContactsListView',
         icon: 'bi bi-person-rolodex',
         id: 2
       },

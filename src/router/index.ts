@@ -13,6 +13,11 @@ const router = createRouter({
       name: 'CRMStepsView',
       component: () => import('../views/CRMStepsView.vue')
     },
+    {
+      path: '/contacts',
+      name: 'ContactsListView',
+      component: () => import('../views/ContactsListView.vue')
+    }
   ],
 })
 
