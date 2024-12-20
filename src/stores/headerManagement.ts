@@ -4,6 +4,7 @@ import { computed, reactive, ref } from 'vue'
 export const headerManagementStore = defineStore('headerManagement', () => {
   const headerDataState = ref({
     buttonMessage: '',
+    inputMessage: '',
     headerMessage: '',
     action: ''
   })
@@ -14,7 +15,8 @@ export const headerManagementStore = defineStore('headerManagement', () => {
     headerDataState.value = {
       buttonMessage: payload.buttonMessage,
       headerMessage: payload.headerMessage,
-      action: payload.action
+      action: payload.action,
+      inputMessage: payload.inputMessage
     }
   }
 

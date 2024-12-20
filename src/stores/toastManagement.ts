@@ -7,10 +7,14 @@ export const toastManagementStore = defineStore('toastManagement', () => {
     toast.success(message)
   }
 
+  const infoToast = (message) => {
+    toast.info(message)
+  }
+
   const errorToast = (message) => {
     toast.error(message)
   }
 
 
-  return { succesToast, errorToast }
+  return { succesToast, infoToast , errorToast }
 })
