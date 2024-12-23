@@ -1,85 +1,64 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView, useRoute } from 'vue-router'
+import Sidebar from '@/components/SideBars/Sidebar.vue'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
+import Header from '@/components/Headers/Header.vue'
+import { headerManagementStore } from '@/stores/headerManagement.ts'
+import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+
+const userConfig = userConfigStore()
+const stepStore = stepsManagementStore()
+const headerStore = headerManagementStore()
+const userConfigWidth = computed(() => userConfig.userWidth)
+const route = useRoute()
+
+
+const updateUserViewPort = () => {
+  userConfig.setUserviewPortWith(window.innerWidth)
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateUserViewPort);
+  userConfig.setUserviewPortWith(window.innerWidth)
+
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateUserViewPort);
+})
+
+
+watch(route, (newRoute) => {
+  switch (newRoute.name){
+    case 'funnelsView':
+      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel', inputMessage: 'Search For Funnels' })
+      break;
+    case 'CRMStepsView':
+      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact', inputMessage: 'Search For Contacts' })
+      break;
+    case 'ContactsListView': 
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '' })
+      break;
+  }
+})
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="d-flex vw-100 vh-100">
+    <Sidebar v-if="userConfigWidth > 992" />
+    <div class="flex-grow-1 flex-1 d-flex overflow-x-auto flex-column body-content">
+      <Header />
+      <RouterView />
     </div>
-  </header>
+  </div>
 
-  <RouterView />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.body-content {
+  background-color: #EBEBEB;
+  max-width: 100%;
 }
 </style>

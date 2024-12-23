@@ -14,9 +14,19 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "fuse.js": "^7.0.0",
     "pinia": "^2.2.6",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "v-money3": "^3.24.1",
+    "vee-validate": "^4.14.7",
     "vue": "^3.5.13",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vue-the-mask": "^0.11.1",
+    "vue3-toastify": "^0.2.5",
+    "vuedraggable": "^4.1.0",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
