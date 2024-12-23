@@ -13,6 +13,14 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     ]
   )
 
+  const favoriteFunnels = computed(() => funnelsData.value.filter((funnelInArray) => funnelInArray.favorite ===  true))
+
+  const handleFunnelFavoriteState = (funnelPayload) => {
+    const index = funnelsData.value.findIndex((funnelInArray) => funnelInArray.id === funnelPayload.id)
+    funnelsData.value[index].favorite = !funnelPayload.favorite
+    toastManagement.succesToast("Funnel Favorite State Updated!")
+  }
+
   const funnelsDataGetter = computed(() => funnelsData.value)
 
   const duplicateFunnel = (funnelToDuplicate) => {
@@ -42,6 +50,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     funnelToPush.value.id = id
     funnelToPush.value.description = description
     funnelToPush.value.date = created_at
+    funnelToPush.value.favorite = false
 
     funnelsData.value.push(funnelToPush.value)
     stepsStore.createStepsForDefaultFunnel(funnelToPush.value.id)
@@ -90,12 +99,13 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
     funnel = {
       ...funnel,
       id: funnelId,
-      date: created_at
+      date: created_at,
+      favorite: false
     }
 
     funnelsData.value.push(funnel)
     stepsStore.createStepsForDefaultFunnel(funnel.id)
   }
 
-  return { funnelsDataGetter, funnelsData, createFunnel, deleteFunnel, editFunnel, duplicateFunnel }
+  return { favoriteFunnels ,handleFunnelFavoriteState ,funnelsDataGetter, funnelsData, createFunnel, deleteFunnel, editFunnel, duplicateFunnel }
 }, { persist: true })

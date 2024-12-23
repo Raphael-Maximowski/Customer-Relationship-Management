@@ -93,16 +93,10 @@ const RouterOptions = [
       },
       {
         name: 'Favorites',
-        routeName: '',
-        icon: 'bi bi-heart-fill',
+        routeName: 'FavoriteListView',
+        icon: 'bi bi-pin-angle-fill',
         id: 4
       },
-      {
-        name: 'Create',
-        routeName: '',
-        icon: 'bi bi-cloud-plus-fill',
-        id: 5
-      }
     ]
   },
   {
@@ -181,7 +175,7 @@ const RouterOptions = [
       </button>
     </div>
     <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
-      <button @click="dispatchButtonAction" type="button" class="ms-5 btn px-5 btn-primary"> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="ms-5 btn px-5 btn-primary"> {{ headerConfigData.buttonMessage }} </button>
     </div>
     <div v-if="mobileHeaderState" class="d-flex align-items-center flex-column mobile-header-body position-absolute bg-primary w-100 z-3">
       <div class="w-75">

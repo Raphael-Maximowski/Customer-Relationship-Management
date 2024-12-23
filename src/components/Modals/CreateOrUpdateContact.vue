@@ -57,6 +57,7 @@ const [contactStep] = defineField('contactStep')
 const [contactCompany] = defineField('contactCompany')
 const [contactAddress] = defineField('contactAddress')
 const [contactCNPJ] = defineField('contactCNPJ')
+const [contactFavoriteState] = defineField('contactFavoriteState')
 
 const handleModalState = () => {
   modalStore.handleModalState()
@@ -163,6 +164,13 @@ const createContact = async () => {
   handleModalState()
 }
 
+const handleContactFavoriteState = () => {
+  setValues({
+    contactFavoriteState: !contactFavoriteState.value
+  })
+  contactStore.setFavoriteState(contactOriginalMockup.value)
+}
+
 watch(modalDataFromStore.value, (newValue) => {
   if (newValue.modalView === 'CreateOrUpdateContact' && newValue.modalState) {
 
@@ -177,7 +185,8 @@ watch(modalDataFromStore.value, (newValue) => {
         contactStep: newValue.modalData.stepId,
         contactCompany: newValue.modalData.contactCompany,
         contactAddress: newValue.modalData.contactAddress,
-        contactCNPJ: newValue.modalData.contactCNPJ
+        contactCNPJ: newValue.modalData.contactCNPJ,
+        contactFavoriteState: newValue.modalData.favorite
       })
 
       return
@@ -202,9 +211,21 @@ onMounted(() => {
     tabindex="-1" role="dialog">
     <div style="right: 0px" class="modal-dialog position-absolute modal-lg m-0" role="document">
       <div class="modal-content vh-100 px-3">
-        <div class="d-flex modal-header text-primary">
-          <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
-          <h5 class="fw-bold modal-title"> {{ modalInEditMode ? 'Update' : 'Create' }} Contact</h5>
+        <div class="d-flex modal-header text-primary justify-content-between">
+          <div class="d-flex align-items-center">
+            <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
+            <h5 class="fw-bold modal-title"> {{ modalInEditMode ? 'Update' : 'Create' }} Contact</h5>
+          </div>
+          <div class="d-flex align-items-center">
+            <button
+              v-if="modalInEditMode"
+              class="bg-transparent border-0">
+              <i
+                @click="handleContactFavoriteState"
+                :class="[ contactFavoriteState ? 'bi-pin-angle-fill' : 'bi-pin-angle', 'bi py-1 px-2 rounded-2  bg-primary text-white']"></i>
+            </button>
+          </div>
+
         </div>
         <div class="modal-body overflow-y-auto text-primary">
           <p class="fw-bold">Mandatory Information</p>

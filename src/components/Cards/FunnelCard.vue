@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { useRouter } from 'vue-router'
@@ -48,6 +48,10 @@ const duplicateFunnel = () => {
   handleDropDownState()
 }
 
+const handleFavoriteState = () => {
+  funnelsManagement.handleFunnelFavoriteState(props.funnelData)
+}
+
 </script>
 
 <template>
@@ -71,7 +75,7 @@ const duplicateFunnel = () => {
           <p class="fs-6 fw-bold text-primary m-0">Code: {{ funnelData.id }}</p>
         </div>
         <div class="my-2 d-flex align-items-center justify-content-between ">
-          <button class="bg-transparent border-0"><i class="bi py-1 px-2 rounded-2  bg-primary text-white bi-plus-lg"></i></button>
+          <button @click.stop="handleFavoriteState" class="bg-transparent border-0"><i :class="[ funnelData.favorite ? 'bi-pin-angle-fill' : 'bi-pin-angle', 'bi py-1 px-2 rounded-2  bg-primary text-white']"></i></button>
           <button class="bg-transparent border-0"><i @click.stop="handleDropDownState" class="bi py-1 px-2 rounded-2  button-option bg-primary text-white bi-three-dots"></i></button>
         </div>
       </div>
