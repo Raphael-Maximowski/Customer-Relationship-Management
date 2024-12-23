@@ -52,7 +52,7 @@ const duplicateFunnel = () => {
 
 <template>
   <div  class="card bg-white rounded-3  border-0">
-    <div v-if="dropDownState" style="top: 45px; right: 60px; border: 1px solid #EBEBEB" class="card-body bg-white rounded-2 position-absolute  col-10 col-md-6 d-flex">
+    <div v-if="dropDownState" style="top: 45px; right: 60px; border: 1px solid #EBEBEB" class="card-body z-3 bg-white rounded-2 position-absolute  col-10 col-md-6 d-flex">
       <div class="w-100">
         <div @click="handleModalState" class="py-2 px-3 drop-up-option rounded-3 text-primary w-100 d-flex justify-content-between">
                   <p class="m-0">Edit</p>

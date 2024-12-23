@@ -116,10 +116,10 @@ const RouterOptions = [
       <p class="ms-5 fs-4 m-0 text-primary fw-bold"> {{ headerConfigData.headerMessage }} </p>
     </div>
     <div class="w-25 h-100 d-flex align-items-center">
-      <input placeholder="Input MockUp" class="form-control py-2 w-100" />
+      <input v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
     </div>
     <div class="w-25 h-100 d-flex align-items-center justify-content-center">
-      <button @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
     </div>
   </div>
 

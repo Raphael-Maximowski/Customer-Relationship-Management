@@ -6,3 +6,8 @@
     box-shadow: none;
     border: 1px solid lightgray;
 }
+
+.form-select:focus {
+    box-shadow: none;
+    border: 1px solid lightgray;
+}

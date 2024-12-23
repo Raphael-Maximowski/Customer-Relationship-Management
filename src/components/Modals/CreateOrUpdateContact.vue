@@ -41,6 +41,15 @@ const { defineField, values, validate, setValues } = useForm({
   validationSchema
 })
 
+const moneyInputConfig = {
+  decimal: ",",
+  thousands: ".",
+  prefix: "R$ ",
+  suffix: "",
+  precision: 2,
+  masked: false,
+  disableNegative: true,
+}
 const [contactName] = defineField('contactName')
 const [contactInterestedIn] = defineField('contactInterestedIn')
 const [contactTradingValue] = defineField('contactTradingValue')
@@ -211,7 +220,7 @@ onMounted(() => {
           </div>
           <div class="my-3 ">
             <label class="mb-1">Trading Value: </label>
-            <input v-mask="'R$ #.###.###,##'"  v-model="contactTradingValue" class="form-control " placeholder="R$ 1.000.000,00" />
+            <input v-money3="moneyInputConfig"  v-model.lazy="contactTradingValue" class="form-control " placeholder="R$ 1.000.000,00" />
           </div>
           <div class="my-3 ">
             <label class="mb-1">Contact Number: </label>
