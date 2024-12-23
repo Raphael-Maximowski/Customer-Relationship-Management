@@ -16,6 +16,10 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
     { name: '6', contactPosition: 0, id: 10,stepId: 4, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
   ])
 
+  const getContactsByFunnelId = (funnelId) => {
+    return contactsState.value.filter((contactInArray) => contactInArray.funnelId == funnelId)
+  }
+
   const filteredContacts = ref([])
 
   const setFilteredContactsData = (filteredCOntactsData) => {
@@ -110,8 +114,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
       contactToPush.value.stepId = stepId
       contactsState.value.push(contactToPush.value)
 
-      console.log("New Contact: ", contactToPush.value)
-
       for (let i = 0; i < filteredContacts.length; i++) {
         if (filteredContacts[i].contactPosition >= event.added.newIndex) {
           const indexToManipulate = contactsState.value.findIndex((contactInArray) => contactInArray.id === filteredContacts[i].id )
@@ -169,7 +171,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
       contactsState.value[index].contactPosition++
     }
 
-    console.log("Contact Created: ", contactToPush.value)
     contactsState.value.push(contactToPush.value)
     toastStore.succesToast("Contact created with succes!")
   }
@@ -197,6 +198,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
   const deleteCascadeContacts = (stepId) => {
     contactsState.value = contactsGetterState.value.filter((ContactInArray) => ContactInArray.stepId !== stepId)
   }
-  return { filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
+  return { getContactsByFunnelId ,filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
 
 },{ persist: true }  )

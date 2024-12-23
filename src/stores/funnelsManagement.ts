@@ -3,10 +3,11 @@ import { computed, reactive, ref } from 'vue'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 
-const toastManagement = toastManagementStore()
-const stepsStore = stepsManagementStore()
 
 export const funnelsManagementStore = defineStore('funnelsManagement', () => {
+  const toastManagement = toastManagementStore()
+  const stepsStore = stepsManagementStore()
+
   const funnelsData = ref([
     { name: 'Funnel Example', description: 'Created as a Example', id: 1, date: '10/09/2024' }
     ]
@@ -15,6 +16,7 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
   const funnelsDataGetter = computed(() => funnelsData.value)
 
   const duplicateFunnel = (funnelToDuplicate) => {
+
     if (!funnelToDuplicate) {
       toastManagement.errorToast('An error occurred while duplicating, try again later')
       return
