@@ -1,10 +1,12 @@
 <script setup>
 
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const modalStore = modalsManagementStore()
-
+const userConfig = userConfigStore()
+const messageToSend = computed(() => userConfig.userMessageToSend)
 const props = defineProps({
   contactData: { type: Object, required: true }
 })
@@ -20,7 +22,10 @@ const handleUpdateModalState = () => {
 
 const redirectToWhatsApp = () => {
   const number = props.contactData.contactNumber.replace(/[+(),\s-]/g, '')
-  window.open(`https://wa.me/${number}`, '_blank');
+
+  !messageToSend.value ? window.open(`https://wa.me/${number}`, '_blank')
+    : window.open(`https://wa.me/${number}?text=${messageToSend.value}`, '_blank')
+
 }
 
 </script>

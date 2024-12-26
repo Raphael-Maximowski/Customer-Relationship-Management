@@ -24,3 +24,4 @@ app.use(router)
 app.use(Vue3Toastify)
 
 app.mount('#app')
+

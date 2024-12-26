@@ -7,12 +7,15 @@ import { useRoute } from 'vue-router'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const route = useRoute()
 const toastStore = toastManagementStore()
 const modalStore = modalsManagementStore()
 const contactStore = contactsManagementStore()
 const stepsStore = stepsManagementStore()
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 const modalInEditMode = ref(false)
 const stepsData = computed(() => stepsStore.getSteps(route.params.id))
 const modalDataFromStore = computed(() => modalStore.modalData)
@@ -211,7 +214,7 @@ onMounted(() => {
     tabindex="-1" role="dialog">
     <div style="right: 0px" class="modal-dialog position-absolute modal-lg m-0" role="document">
       <div class="modal-content vh-100 px-3">
-        <div class="d-flex modal-header text-primary justify-content-between">
+        <div :class="['d-flex modal-header justify-content-between', userColorData.text]">
           <div class="d-flex align-items-center">
             <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
             <h5 class="fw-bold modal-title"> {{ modalInEditMode ? 'Update' : 'Create' }} Contact</h5>
@@ -222,12 +225,12 @@ onMounted(() => {
               class="bg-transparent border-0">
               <i
                 @click="handleContactFavoriteState"
-                :class="[ contactFavoriteState ? 'bi-pin-angle-fill' : 'bi-pin-angle', 'bi py-1 px-2 rounded-2  bg-primary text-white']"></i>
+                :class="[ contactFavoriteState ? 'bi-pin-angle-fill' : 'bi-pin-angle', 'bi py-1 px-2 rounded-2 text-white', userColorData.color]"></i>
             </button>
           </div>
 
         </div>
-        <div class="modal-body overflow-y-auto text-primary">
+        <div :class="['modal-body overflow-y-auto', userColorData.text]">
           <p class="fw-bold">Mandatory Information</p>
           <div class="my-3">
             <label class="mb-1">Name: </label>
@@ -256,7 +259,7 @@ onMounted(() => {
                   :style="{ borderRadius: index === stepsData.length - 1 ? '0px 10px 10px 0px' : index === 0 ? '10px 0px 0px 10px' : '0px 0px 0px 0px' }"
                   @click="handleNewStepForContact(stepData)"
                   type="button"
-                  :class="[ stepData.id === contactStep ? 'btn-primary' : 'btn-outline-primary' ,'btn h-100 px-3 py-2']">
+                  :class="[ stepData.id === contactStep ? userColorData.btn : userColorData.emptyBtn ,'btn h-100 px-3 py-2']">
                   {{ stepData.name }}
                 </button>
               </div>
@@ -279,8 +282,8 @@ onMounted(() => {
           </div>
         </div>
         <div class="modal-footer d-flex">
-          <button @click="deleteContact" v-if="modalInEditMode" type="button" class="btn btn-danger py-2 px-3">Delete Contact</button>
-          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" class="btn btn-primary py-2 px-3"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
+          <button @click="deleteContact" v-if="modalInEditMode" type="button" :class="['btn py-2 px-3', userColorData.emptyBtn]">Delete Contact</button>
+          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" :class="['btn py-2 px-3', userColorData.btn ]"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
         </div>
       </div>
     </div>

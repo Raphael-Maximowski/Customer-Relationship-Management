@@ -16,14 +16,16 @@ const userConfig = userConfigStore()
 const stepStore = stepsManagementStore()
 const toastStore = toastManagementStore()
 const funnelsStore = funnelsManagementStore()
-const route = useRoute()
 const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
 const contactStore = contactsManagementStore()
 const router = useRouter()
 const headerStore = headerManagementStore()
 const headerConfigData = computed(() => headerStore.headerDataGetter)
+const userColorData = computed(() => userConfig.userColorData)
 const modalsStore = modalsManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
+const route = useRoute()
+const userConfigName = computed(() => userConfig.userName)
 const inputData = ref([])
 const inputSearch = ref('')
 const fuseConfigFunnelsAndContacts = {
@@ -97,33 +99,14 @@ const RouterOptions = [
         icon: 'bi bi-pin-angle-fill',
         id: 4
       },
-    ]
-  },
-  {
-    name: 'User Options',
-    icon: 'bi bi-person-circle',
-    id: 2,
-    router: [
       {
-        name: 'Configuration',
-        routeName: '',
+        name: 'Settings',
+        routeName: 'User Settings',
         icon: 'bi bi-gear-fill',
-        id: 6
-      },
-      {
-        name: 'About the Project',
-        routeName: '',
-        icon: 'bi bi-exclamation-triangle-fill',
-        id: 8
-      },
-      {
-        name: 'Contact Creator',
-        routeName: '',
-        icon: 'bi bi-telephone-fill',
-        id: 9
+        id: 5
       }
     ]
-  }
+  },
 ]
 
 </script>
@@ -134,8 +117,8 @@ const RouterOptions = [
     class="d-flex align-items-center header-desktop w-100 ">
     <div class="w-50 d-flex flex-column justify-content-center h-100
 ">
-        <p class="ms-5 text-primary m-0 fs-4 fw-bold">Welcome User</p>
-      <p class="ms-5 fs-4 m-0 text-primary fw-bold"> {{ headerConfigData.headerMessage }} </p>
+        <p :class="['ms-5 m-0 fs-4 fw-bold', userColorData.text]">Welcome {{ userConfigName }}</p>
+      <p :class="['ms-5 fs-4 m-0 fw-bold', userColorData.text]"> {{ headerConfigData.headerMessage }} </p>
     </div>
     <div class="w-25 h-100 d-flex flex-column justify-content-center position-relative">
       <input v-model="inputSearch" @input="() => searchAction()" v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
@@ -162,12 +145,12 @@ const RouterOptions = [
 
     </div>
     <div class="w-25 h-100 d-flex align-items-center justify-content-center">
-      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['btn fs-6 w-50 py-2', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
   </div>
 
   <div v-else >
-    <div class="flex-column  text-center d-flex align-items-center justify-content-center mobile-header bg-primary">
+    <div :class="['flex-column  text-center d-flex align-items-center justify-content-center mobile-header', userColorData.color]">
       <h1 class="text-white title">CUSTOMER RELATIONSHIP</h1>
       <h2 class="text-white sub-title">MANAGEMENT</h2>
       <button style="top: 10px; left: 10px" class="position-absolute border-0 bg-transparent">
@@ -175,9 +158,9 @@ const RouterOptions = [
       </button>
     </div>
     <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
-      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="ms-5 btn px-5 btn-primary"> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['ms-5 btn px-5', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
-    <div v-if="mobileHeaderState" class="d-flex align-items-center flex-column mobile-header-body position-absolute bg-primary w-100 z-3">
+    <div v-if="mobileHeaderState" :class="['d-flex align-items-center flex-column mobile-header-body position-absolute w-100 z-3', userColorData.color]">
       <div class="w-75">
         <div
           :key="routerOption.id"
