@@ -5,9 +5,12 @@ import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { computed, onMounted } from 'vue'
 import EmptyFavoriteCard from '@/components/Cards/EmptyFavoriteCard.vue'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const contactsStore = contactsManagementStore()
 const funnelStore = funnelsManagementStore()
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 
 const contactsFavoriteData = computed(() => contactsStore.favoriteContacts)
 const funnelsFavoriteData = computed(() => funnelStore.favoriteFunnels)
@@ -18,7 +21,7 @@ const funnelsFavoriteData = computed(() => funnelStore.favoriteFunnels)
   <div class="d-lg-flex w-100 h-100 mt-3 favorite-content">
     <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center h-100 ">
       <div class="h-100 w-75 d-flex flex-column">
-        <div class="w-100 bg-primary py-3 rounded-2">
+        <div :class="['w-100 py-3 rounded-2', userColorData.color]">
           <p class="m-0 text-white ms-3 fw-bold">Favorite Contacts</p>
         </div>
         <div class="list-content h-100 mb-5">
@@ -33,7 +36,7 @@ const funnelsFavoriteData = computed(() => funnelStore.favoriteFunnels)
     </div>
     <div class="col-lg-6 mt-lg-0 mt-5 col-12 d-flex align-items-center justify-content-center h-100">
       <div class="h-100 w-75 d-flex flex-column">
-        <div class="w-100 py-3 bg-primary rounded-2">
+        <div :class="['w-100 py-3 rounded-2', userColorData.color]">
           <p class="m-0 ms-3 text-white fw-bold">Favorite Funnels</p>
         </div>
         <div class="list-content h-100 mb-5">

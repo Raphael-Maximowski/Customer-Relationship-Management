@@ -6,6 +6,7 @@ import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import ContactCard from '@/components/Cards/ContactCard.vue'
 import EmptyStepCard from '@/components/Cards/EmptyStepCard.vue'
 import draggable from 'vuedraggable'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const props = defineProps({
   stepInfo: { type: Object, required: true }
@@ -14,6 +15,8 @@ const props = defineProps({
 const stepsManagement = stepsManagementStore()
 const toastManagement = toastManagementStore()
 const contactsStore = contactsManagementStore()
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 const contactsOriginalState = computed(() => contactsStore.contactsState)
 const contactsData = ref(contactsStore.getFilteredContacts(props.stepInfo.id))
 const newStepName = ref('')
@@ -50,7 +53,7 @@ watch(contactsOriginalState, (newValue) => {
 
 <template>
   <div class="steps-container mx-5 d-flex flex-column   h-100">
-    <div class="px-3  steps-header d-flex text-white align-items-center justify-content-between  w-100 bg-primary">
+    <div :class="['px-3  steps-header d-flex text-white align-items-center justify-content-between  w-100', userColorData.color]">
       <div v-if="!editStepState" class="d-flex justify-content-between w-100">
         <p class="m-0 fs-6 ">{{ stepInfo.name }}</p>
         <i @click="handleEditStepState" class="bi bi-three-dots-vertical"></i>
