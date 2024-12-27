@@ -40,6 +40,9 @@ watch(route, (newRoute) => {
     case 'ContactsListView':
       headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '', searchType: '' })
       break;
+    case 'FavoriteListView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Check All of Your Favorites!', action: 'Create Contact', inputMessage: '', searchType: '' })
+      break;
   }
 })
 

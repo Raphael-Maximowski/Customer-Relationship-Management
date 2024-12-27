@@ -22,6 +22,8 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
 
   const filteredContacts = ref([])
 
+  const favoriteContacts = computed(() => contactsState.value.filter((contactInArray) => contactInArray.favorite === true))
+
   const setFilteredContactsData = (filteredCOntactsData) => {
     const toastStore = toastManagementStore()
 
@@ -155,6 +157,13 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
     return filteredContacts.sort((a, b) => a.contactPosition - b.contactPosition)
   }
 
+  const setFavoriteState = (contactPayload) => {
+    const toastStore = toastManagementStore()
+    const index = contactsState.value.findIndex((contactInArray) => contactInArray.id === contactPayload.id)
+    contactsState.value[index].favorite = !contactPayload.favorite
+    toastStore.succesToast("Contact Favorite State Updated!")
+  }
+
   const createNewContact = (contactPayload) => {
     const toastStore = toastManagementStore()
     const contactToPush = ref(contactPayload.value)
@@ -162,7 +171,8 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
     contactToPush.value = {
       ...contactToPush.value,
       id: contactId,
-      contactPosition: 0
+      contactPosition: 0,
+      favorite: false
     }
 
     const contactsInStep = getFilteredContacts(contactToPush.value.stepId)
@@ -198,6 +208,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
   const deleteCascadeContacts = (stepId) => {
     contactsState.value = contactsGetterState.value.filter((ContactInArray) => ContactInArray.stepId !== stepId)
   }
-  return { getContactsByFunnelId ,filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
+  return { favoriteContacts ,setFavoriteState, getContactsByFunnelId , ,filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
 
 },{ persist: true }  )

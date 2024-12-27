@@ -49,16 +49,10 @@ const RouterOptions = [
       },
       {
         name: 'Favorites',
-        routeName: '',
-        icon: 'bi bi-heart-fill',
+        routeName: 'FavoriteListView',
+        icon: 'bi bi-pin-angle-fill',
         id: 4
       },
-      {
-        name: 'Create',
-        routeName: '',
-        icon: 'bi bi-cloud-plus-fill',
-        id: 5
-      }
     ]
   },
   {
