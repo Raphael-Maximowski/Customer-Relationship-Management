@@ -1,40 +1,42 @@
 <script setup>
 import ReturnFormButton from '@/components/Buttons/returnFormButton.vue'
-import Chart from 'chart.js/auto';
-import { onMounted } from 'vue'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { nextTick, onMounted, ref } from 'vue'
+import Chart from 'chart.js/auto';
 
 const funnelStore = funnelsManagementStore()
-const reportData = funnelStore.filterReports()
+const funnelsReportData = ref([])
+const chartInstance = ref(null)
+const canvasRef = ref(null)
 
-const labels = reportData.funnels
-const data = {
-  labels: labels,
-  datasets: [{
-    label: 'Valid Funnels',
-    data: reportData.values,
-    borderWidth: 1
-  }]
-};
+const data = ref({
+  labels: [],
+  datasets: [
+    {
+      data: [],
+    }
+  ]
+})
 
 const config = {
-  type: 'bar',
-  data: data,
+  type: 'doughnut',
+  data: data.value,
   options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
+    responsive: true,
   },
 };
 
-onMounted(async () => {
-  const myChart = new Chart(
-    document.getElementById("myChart"),
-    config
-  )
+const getSuccesSteps = () => {
+  funnelsReportData.value = funnelStore.totalSuccesFromFunnels()
+  data.value.labels = funnelsReportData.value.labels
+  data.value.datasets[0].data = funnelsReportData.value.succesContacts
+}
+
+onMounted( async () => {
+  await getSuccesSteps()
+  chartInstance.value = new Chart(canvasRef.value, config);
 })
+
 </script>
 
 <template>
@@ -44,55 +46,63 @@ onMounted(async () => {
         <div>
           <ReturnFormButton />
         </div>
-        <p class="m-0 fw-bold fs-5">Profit By Funnels</p>
+        <p class="m-0 fw-bold fs-5">Approval Rate From Funnels</p>
       </div>
 
       <p class="ms-5">The values shown below are based in the 'Accepted' columns from each funnel</p>
     </div>
     <div class="flex-grow-1 mt-4 mb-5 d-flex align-items-center justify-content-center">
       <div class="graph-container">
-        <canvas id="myChart"></canvas>
+        <canvas ref="canvasRef"></canvas>
       </div>
-
     </div>
   </div>
 </template>
 
 <style scoped>
 .graph-container  {
-  width: 50%;
-  max-width: 100%;
-  overflow-x: auto;
+  width: 25%;
 }
 
 @media(max-width: 2000px) {
   .graph-container  {
-    width: 60%;
+    width: 35%;
   }
 }
 
 @media(max-width: 1700px) {
   .graph-container  {
-    width: 65%;
+    width: 40%;
   }
 }
 
 @media(max-width: 1500px) {
   .graph-container  {
-    width: 70%;
+    width: 45%;
   }
 }
 
 @media(max-width: 1300px) {
   .graph-container  {
-    width: 85%;
+    width: 53%;
   }
 }
 
 @media(max-width: 1100px) {
   .graph-container  {
-    width: 100%;
+    width: 60%;
   }
 }
 
+@media(max-width: 700px) {
+  .graph-container  {
+    width: 70%;
+  }
+}
+
+@media(max-width: 500px) {
+  .graph-container  {
+    width: 90%;
+  }
+}
 </style>

@@ -37,11 +37,11 @@ const handleTextDropDownColor = () => {
 
 const saveChanges = () => {
 
-  userName.value !== userMockUp ? userConfig.setUserName(userName.value) : ''
-  userMessage.value !== userMessageMockUp ? userConfig.setMessageToSend(userMessage.value) : ''
+  userName.value != userMockUp ? userConfig.setUserName(userName.value) : ''
+  userMessage.value != userMessageMockUp ? userConfig.setMessageToSend(userMessage.value) : ''
 
-  newBackgroundColor.value.name !== userColorsMockUp.value.backgroundColor
-  || newTextColor.value.textName !== userColorsMockUp.value.textColor ?
+  newBackgroundColor.value.name != userColorsMockUp.value.backgroundColor
+  || newTextColor.value.textName != userColorsMockUp.value.textColor ?
     dispatchNewColors() : ''
 }
 
@@ -119,7 +119,7 @@ onMounted(() => {
               v-for="colorData in textColors"
               :key="colorData.textName"
             >
-              <input :checked="colorData.textName === newTextColor.textName" type="checkbox" class="me-3"/>
+              <input :checked="colorData.textName == newTextColor.textName" type="checkbox" class="me-3"/>
               <p :class="[colorData.text, 'm-0']">{{ colorData.textName }}</p>
             </div>
           </div>

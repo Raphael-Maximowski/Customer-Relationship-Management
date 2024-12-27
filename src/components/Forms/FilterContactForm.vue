@@ -56,16 +56,16 @@ const filterContacts = () => {
   })
   const fuse = new Fuse(contactsData.value, fuseConfig.value)
 
-  if (filtersPayload.value.tradingValueFrom !== 'R$ 0,00' || filtersPayload.value.tradingValueTo !== 'R$ 0,00') {
+  if (filtersPayload.value.tradingValueFrom != 'R$ 0,00' || filtersPayload.value.tradingValueTo != 'R$ 0,00') {
     const tradingValuePayload = ref({})
-    if (filtersPayload.value.tradingValueFrom !== 'R$ 0,00') {
+    if (filtersPayload.value.tradingValueFrom != 'R$ 0,00') {
       tradingValuePayload.value = {
         ...tradingValuePayload.value,
         tradingValueFrom: filtersPayload.value.tradingValueFrom
       }
     }
 
-    if (filtersPayload.value.tradingValueTo !== 'R$ 0,00') {
+    if (filtersPayload.value.tradingValueTo != 'R$ 0,00') {
       tradingValuePayload.value = {
         ...tradingValuePayload.value,
         tradingValueTo: filtersPayload.value.tradingValueTo
@@ -80,7 +80,7 @@ const filterContacts = () => {
   const fuseToSearch = ref({})
   const filterKeys = Object.keys(filtersPayload.value)
   filterKeys.forEach((keyFiltered) => {
-    const isFieldNotEmpty = filtersPayload.value[keyFiltered] && keyFiltered !== 'tradingValueFrom' && keyFiltered !== 'tradingValueTo' ? true : false
+    const isFieldNotEmpty = filtersPayload.value[keyFiltered] && keyFiltered != 'tradingValueFrom' && keyFiltered != 'tradingValueTo' ? true : false
     if (isFieldNotEmpty) {
       fuseToSearch.value[keyFiltered] = filtersPayload.value[keyFiltered]
     }
@@ -90,7 +90,7 @@ const filterContacts = () => {
   const contactsReturnedFromFuse = fuse.search(fuseToSearch.value)
   contactsReturnedFromFuse.forEach((contactFilteredFromFuse) => {
     const isContactBlockedFromOtherFilter = blockedContacts.value.find(
-      (contactBlocked) => contactBlocked.id === contactFilteredFromFuse.item.id)
+      (contactBlocked) => contactBlocked.id == contactFilteredFromFuse.item.id)
 
     if (!isContactBlockedFromOtherFilter) {
       filteredData.value.push(contactFilteredFromFuse.item)
@@ -99,9 +99,9 @@ const filterContacts = () => {
 
   if (contactsReturnedFromFuse && filteredDataFromTradingValue.value.length > 0) {
     filteredDataFromTradingValue.value.map((contactFilteredFromTrading) => {
-      const isContactInBothFilters = contactsReturnedFromFuse.find((contactReturnFromFuse) => contactReturnFromFuse.item.id === contactFilteredFromTrading.id)
+      const isContactInBothFilters = contactsReturnedFromFuse.find((contactReturnFromFuse) => contactReturnFromFuse.item.id == contactFilteredFromTrading.id)
       if (isContactInBothFilters) {
-        const isContactAlreadyInFinalArray = filteredData.value.some((contactInArray) => contactInArray.id === contactFilteredFromTrading.id)
+        const isContactAlreadyInFinalArray = filteredData.value.some((contactInArray) => contactInArray.id == contactFilteredFromTrading.id)
 
         if (!isContactAlreadyInFinalArray) {
           funnelsData.value.push(contactFilteredFromTrading)
@@ -122,8 +122,8 @@ watch(filtersPayload, (newValue) => {
   const isFiltersEmpty = ref(true)
 
   filterKeys.forEach((filterKey) => {
-    if (filterKey === 'tradingValueFrom' || filterKey === 'tradingValueTo') {
-      filtersPayload.value[filterKey] !== 'R$ 0,00' ? isFiltersEmpty.value = false : ''
+    if (filterKey == 'tradingValueFrom' || filterKey == 'tradingValueTo') {
+      filtersPayload.value[filterKey] != 'R$ 0,00' ? isFiltersEmpty.value = false : ''
     } else {
       !filtersPayload.value[filterKey] ? '' : isFiltersEmpty.value = false
     }

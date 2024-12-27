@@ -30,7 +30,7 @@ const funnelsFavoriteData = computed(() => funnelStore.favoriteFunnels)
             v-for="contact in contactsFavoriteData"
             :contact="contact"
           />
-          <EmptyFavoriteCard v-if="contactsFavoriteData.length === 0"/>
+          <EmptyFavoriteCard v-if="contactsFavoriteData.length == 0"/>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@ const funnelsFavoriteData = computed(() => funnelStore.favoriteFunnels)
             v-for="funnel in funnelsFavoriteData"
             :funnel="funnel"
           />
-          <EmptyFavoriteCard v-if="funnelsFavoriteData.length === 0" />
+          <EmptyFavoriteCard v-if="funnelsFavoriteData.length == 0" />
         </div>
       </div>
     </div>

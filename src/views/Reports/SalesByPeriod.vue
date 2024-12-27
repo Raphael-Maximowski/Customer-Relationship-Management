@@ -57,7 +57,7 @@ onMounted(() => {
       <div>
         <ReturnFormButton />
       </div>
-      <p class="m-0 fw-bold fs-5">Profit By Funnels - Line Chart - Bar Chart</p>
+      <p class="m-0 fw-bold fs-5">Sales By Period - Line Chart</p>
     </div>
     <div class="h-75 mt-4 mb-5 d-flex align-items-center justify-content-center">
       <canvas id="myChart"></canvas>

@@ -91,7 +91,7 @@ const RouterOptions = [
           <div class="mt-4"
                :key="option.id"
                v-for="option in route.router"
-               v-if="route.name !== 'User Options'"
+               v-if="route.name != 'User Options'"
           >
             <div
               @click.stop="handleSideBarRoute(option)"

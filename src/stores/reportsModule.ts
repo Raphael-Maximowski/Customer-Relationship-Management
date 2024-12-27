@@ -11,8 +11,6 @@ export const reportsModule = defineStore(
 
     const setReportData = (reportToSet) => {
       reportToShow.value = reportToSet
-
-      console.log("State: ", reportToShow.value)
     }
     return {
       reportData,

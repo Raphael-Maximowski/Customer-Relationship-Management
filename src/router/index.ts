@@ -36,7 +36,7 @@ const router = createRouter({
         {
           path: 'sales-by-period',
           name: 'Sales By Period',
-          component: () => import('../views/Reports/SalesByPeriodReport.vue')
+          component: () => import('../views/Reports/SalesByPeriod.vue')
         },
         {
           path: 'profit-by-funnels-bar',
@@ -56,12 +56,12 @@ const router = createRouter({
         {
           path: 'total-rejection',
           name: 'Total Rejection',
-          component: () => import('../views/Reports/TotalRejection.vue')
+          component: () => import('../views/Reports/RejectionRate.vue')
         },
         {
           path: 'full-approval',
           name: 'Full Approval',
-          component: () => import('../views/Reports/FullApproval.vue')
+          component: () => import('../views/Reports/ApprovalRate.vue')
         }
       ]
     }
