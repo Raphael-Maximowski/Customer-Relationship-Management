@@ -116,6 +116,7 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
       contactToPush.value.stepId = stepId
       contactsState.value.push(contactToPush.value)
 
+
       for (let i = 0; i < filteredContacts.length; i++) {
         if (filteredContacts[i].contactPosition >= event.added.newIndex) {
           const indexToManipulate = contactsState.value.findIndex((contactInArray) => contactInArray.id === filteredContacts[i].id )
@@ -208,6 +209,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
   const deleteCascadeContacts = (stepId) => {
     contactsState.value = contactsGetterState.value.filter((ContactInArray) => ContactInArray.stepId !== stepId)
   }
-  return { favoriteContacts ,setFavoriteState, getContactsByFunnelId , ,filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
+  return { favoriteContacts ,setFavoriteState, getContactsByFunnelId  ,filteredContacts ,setFilteredContactsData ,filterContactsByValue ,contactsGetterState ,orderContacts ,contactsState ,getFilteredContacts, createNewContact, deleteCascadeContacts, deleteContact, updateContact }
 
 },{ persist: true }  )

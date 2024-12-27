@@ -17,7 +17,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "fuse.js": "^7.0.0",
-    "pinia": "^2.2.6",
+    "pinia": "^2.3.0",
     "pinia-plugin-persistedstate": "^4.2.0",
     "v-money3": "^3.24.1",
     "vee-validate": "^4.14.7",

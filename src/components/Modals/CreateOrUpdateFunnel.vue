@@ -5,11 +5,14 @@ import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { computed, ref, watch } from 'vue'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const toastManagement = toastManagementStore()
 const funnelsManagement = funnelsManagementStore()
 const modalsManagement = modalsManagementStore()
 const modalsData = computed(() => modalsManagement.modalData)
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 const funnelMockUp = ref({})
 const editMode = ref(false)
 
@@ -119,7 +122,7 @@ watch(modalsData, (newValue) => {
             <button
               @click="editMode ? editFunnel() : createFunnel()"
               type="button"
-              class="btn btn-primary border-0">
+              :class="['btn border-0', userColorData.btn]">
               {{ editMode ? 'Edit' : 'Create' }} </button>
           </div>
         </div>
