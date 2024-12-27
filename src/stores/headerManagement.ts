@@ -6,7 +6,8 @@ export const headerManagementStore = defineStore('headerManagement', () => {
     buttonMessage: '',
     inputMessage: '',
     headerMessage: '',
-    action: ''
+    action: '',
+    searchType: ''
   })
 
   const headerDataGetter = computed(() => headerDataState.value)
@@ -16,7 +17,8 @@ export const headerManagementStore = defineStore('headerManagement', () => {
       buttonMessage: payload.buttonMessage,
       headerMessage: payload.headerMessage,
       action: payload.action,
-      inputMessage: payload.inputMessage
+      inputMessage: payload.inputMessage,
+      searchType: payload.searchType
     }
   }
 

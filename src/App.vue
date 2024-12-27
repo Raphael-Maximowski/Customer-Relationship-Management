@@ -32,13 +32,13 @@ onUnmounted(() => {
 watch(route, (newRoute) => {
   switch (newRoute.name){
     case 'funnelsView':
-      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel', inputMessage: 'Search For Funnels' })
+      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel', inputMessage: 'Search For Funnels', searchType: 'Funnel' })
       break;
     case 'CRMStepsView':
-      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact', inputMessage: 'Search For Contacts' })
+      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact', inputMessage: 'Search For Contacts', searchType: 'Contacts' })
       break;
-    case 'ContactsListView': 
-      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '' })
+    case 'ContactsListView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '', searchType: '' })
       break;
   }
 })

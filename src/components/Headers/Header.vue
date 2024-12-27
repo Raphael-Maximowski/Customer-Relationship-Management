@@ -3,20 +3,48 @@ import { userConfigStore } from '@/stores/userConfigManagement.ts'
 import { computed, ref } from 'vue'
 import { headerManagementStore } from '@/stores/headerManagement.ts'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-
 import { useRoute, useRouter } from 'vue-router'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
+import InputSearchContact from '@/components/Cards/InputSearchFunnel.vue'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import Fuse from 'fuse.js'
+import InputSearchFunnel from '@/components/Cards/InputSearchContact.vue'
 
 const userConfig = userConfigStore()
 const stepStore = stepsManagementStore()
 const toastStore = toastManagementStore()
+const funnelsStore = funnelsManagementStore()
+const route = useRoute()
+const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
+const contactStore = contactsManagementStore()
 const router = useRouter()
 const headerStore = headerManagementStore()
 const headerConfigData = computed(() => headerStore.headerDataGetter)
 const modalsStore = modalsManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
-const route = useRoute()
+const inputData = ref([])
+const inputSearch = ref('')
+const fuseConfigFunnelsAndContacts = {
+  keys: [
+    { name: 'name', getFn: (object) => object.name }
+  ],
+  threshold: 0.2
+}
+
+const resetInputData = () => {
+  inputData.value = []
+  inputSearch.value = ''
+}
+
+const searchAction = () => {
+  const dataToSearch = headerConfigData.value.searchType === 'Funnel' ? funnelsData.value : contactStore.getContactsByFunnelId(route.params.id)
+  const fuse = new Fuse(dataToSearch, fuseConfigFunnelsAndContacts)
+
+  inputData.value = fuse.search(inputSearch.value)
+}
+
 
 const mobileHeaderState = ref(false)
 const handleMobileHeaderState = () => {
@@ -115,9 +143,30 @@ const RouterOptions = [
         <p class="ms-5 text-primary m-0 fs-4 fw-bold">Welcome User</p>
       <p class="ms-5 fs-4 m-0 text-primary fw-bold"> {{ headerConfigData.headerMessage }} </p>
     </div>
-    <div class="w-25 h-100 d-flex align-items-center">
-      <input v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
-    </div> 
+    <div class="w-25 h-100 d-flex flex-column justify-content-center position-relative">
+      <input v-model="inputSearch" @input="() => searchAction()" v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
+      <div>
+        <div v-if="inputData.length > 0" class="mt-2 input-drop-down py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
+          <InputSearchFunnel
+            @click="resetInputData"
+            v-if="headerConfigData.searchType === 'Funnel'"
+            v-for="funnelData in inputData"
+            :funnelData="funnelData.item"
+          />
+          <InputSearchContact
+            @click="resetInputData"
+            v-else-if="headerConfigData.searchType === 'Contacts'"
+            v-for="contactData in inputData"
+            :contactData="contactData.item"
+          />
+        </div>
+        <div v-if="inputData.length === 0 && inputSearch" class="mt-2 text-secondary input-drop-down d-flex align-items-center py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
+          <i class="bi bi-exclamation-diamond"></i>
+          <p class="m-0 ms-3"> Nothing was Found </p>
+        </div>
+      </div>
+
+    </div>
     <div class="w-25 h-100 d-flex align-items-center justify-content-center">
       <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
     </div>
@@ -159,6 +208,9 @@ const RouterOptions = [
 </template>
 
 <style scoped>
+.input-drop-down {
+  border: 1px solid rgba(211, 211, 211, 0.71);
+}
 
 .router-option {
   border-bottom: 1px solid white;

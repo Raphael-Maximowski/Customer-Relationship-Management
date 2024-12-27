@@ -8,7 +8,6 @@ import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 
-const editState = ref(false)
 const route = useRoute()
 const toastStore = toastManagementStore()
 const modalStore = modalsManagementStore()
@@ -205,7 +204,7 @@ onMounted(() => {
       <div class="modal-content vh-100 px-3">
         <div class="d-flex modal-header text-primary">
           <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
-          <h5 class="fw-bold modal-title"> {{ editState ? 'Update' : 'Create' }} Contact</h5>
+          <h5 class="fw-bold modal-title"> {{ modalInEditMode ? 'Update' : 'Create' }} Contact</h5>
         </div>
         <div class="modal-body overflow-y-auto text-primary">
           <p class="fw-bold">Mandatory Information</p>
