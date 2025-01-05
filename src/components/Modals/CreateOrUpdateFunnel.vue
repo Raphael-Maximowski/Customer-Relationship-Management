@@ -84,7 +84,7 @@ const handleModalState = () => {
 }
 
 watch(modalsData, (newValue) => {
-  if (newValue.modalData.dataType === 'funnel') {
+  if (newValue.modalData.dataType == 'funnel') {
     funnelMockUp.value = newValue.modalData.funnelData
     setNewValues({ name: funnelMockUp.value.name, description: funnelMockUp.value.description })
     editMode.value = true
@@ -97,7 +97,7 @@ watch(modalsData, (newValue) => {
 </script>
 
 <template>
-    <div :class="['modal fade show modal-background', modalsData.modalView === 'CreateOrUpdateFunnel' ? 'd-block' : '']" tabindex="-1" >
+    <div :class="['modal fade show modal-background', modalsData.modalView == 'CreateOrUpdateFunnel' ? 'd-block' : '']" tabindex="-1" >
       <div class="modal-dialog modal-lg modal-dialog-centered w-100">
         <div class="modal-content px-4 py-3">
           <div class="modal-header">

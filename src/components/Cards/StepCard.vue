@@ -37,7 +37,7 @@ const editStepName = () => {
 }
 
 const deleteStep = () => {
-  stepsManagement.deleteStep(props.stepInfo.id)
+  stepsManagement.deleteStep(props.stepInfo)
   handleEditStepState()
 }
 
@@ -68,7 +68,7 @@ watch(contactsOriginalState, (newValue) => {
       </div>
     </div>
     <div class=" steps-body overflow-y-auto flex-grow-1 mb-5">
-      <EmptyStepCard v-if="contactsData.length === 0" />
+      <EmptyStepCard v-if="contactsData.length == 0" />
       <draggable
         v-model="contactsData"
         group="contactsData"

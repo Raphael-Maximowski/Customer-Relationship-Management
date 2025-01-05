@@ -48,6 +48,9 @@ watch(route, (newRoute) => {
     case 'User Settings':
       headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Change your Settings!', action: '', inputMessage: '', searchType: '' })
       break;
+    case 'ReportsView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Check all of your Reports!', action: '', inputMessage: '', searchType: '' })
+      break;
   }
 })
 

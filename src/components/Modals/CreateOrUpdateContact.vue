@@ -20,6 +20,7 @@ const modalInEditMode = ref(false)
 const stepsData = computed(() => stepsStore.getSteps(route.params.id))
 const modalDataFromStore = computed(() => modalStore.modalData)
 const contactOriginalMockup = ref('')
+const cantChooseStep = ref(false)
 
 const validationSchema = {
   contactName: yup.string().required('Name field can\'t be empty')
@@ -67,7 +68,7 @@ const handleModalState = () => {
 }
 
 const deleteContact = () => {
-  contactStore.deleteContact(contactOriginalMockup.value.id)
+  contactStore.deleteContact(contactOriginalMockup.value)
   handleModalState()
 }
 
@@ -79,8 +80,13 @@ const handleNewStepForContact = (stepData) => {
 }
 
 const checkFirstStepWhenMounted = () => {
-  const checkIfStartStepExists = stepsData.value.find((StepInArray) => StepInArray.name === 'No Contact')
+  const checkIfStartStepExists = stepsData.value.find((StepInArray) => StepInArray.name == 'No Contact')
   if (!checkIfStartStepExists) {
+    if (!stepsData.value[0]) {
+      cantChooseStep.value = true
+      return
+    }
+
     setValues({
       contactStep: stepsData.value[0].id
     })
@@ -174,8 +180,14 @@ const handleContactFavoriteState = () => {
   contactStore.setFavoriteState(contactOriginalMockup.value)
 }
 
+watch(stepsData.value, (newValue) => {
+  if (newValue.length > 0) {
+    cantChooseStep.value = false
+  }
+})
+
 watch(modalDataFromStore.value, (newValue) => {
-  if (newValue.modalView === 'CreateOrUpdateContact' && newValue.modalState) {
+  if (newValue.modalView == 'CreateOrUpdateContact' && newValue.modalState) {
 
     if (newValue.editMode) {
       modalInEditMode.value = true
@@ -210,7 +222,7 @@ onMounted(() => {
 
 <template>
   <div
-    :class="[ modalDataFromStore.modalView === 'CreateOrUpdateContact' && modalDataFromStore.modalState ? 'd-block' : '' , 'modal modal-background']"
+    :class="[ modalDataFromStore.modalView == 'CreateOrUpdateContact' && modalDataFromStore.modalState ? 'd-block' : '' , 'modal modal-background']"
     tabindex="-1" role="dialog">
     <div style="right: 0px" class="modal-dialog position-absolute modal-lg m-0" role="document">
       <div class="modal-content vh-100 px-3">
@@ -249,14 +261,14 @@ onMounted(() => {
             <label class="mb-1">Contact Number: </label>
             <input v-mask="'+## (##) #####-####'" v-model="contactNumber" class="form-control " placeholder="+55 (DD) 0000-0000" />
           </div>
-          <div class="my-3 ">
+          <div class="my-3 " v-if="!cantChooseStep">
             <label class="mb-1">Contact Step: </label>
             <div class="d-flex flex-wrap">
               <div
                 v-for="(stepData, index) in stepsData"
                 class="">
                 <button
-                  :style="{ borderRadius: index === stepsData.length - 1 ? '0px 10px 10px 0px' : index === 0 ? '10px 0px 0px 10px' : '0px 0px 0px 0px' }"
+                  :style="{ borderRadius: index == stepsData.length - 1 ? '0px 10px 10px 0px' : index == 0 ? '10px 0px 0px 10px' : '0px 0px 0px 0px' }"
                   @click="handleNewStepForContact(stepData)"
                   type="button"
                   :class="[ stepData.id === contactStep ? userColorData.btn : userColorData.emptyBtn ,'btn h-100 px-3 py-2']">

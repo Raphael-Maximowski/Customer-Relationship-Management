@@ -41,7 +41,7 @@ const resetInputData = () => {
 }
 
 const searchAction = () => {
-  const dataToSearch = headerConfigData.value.searchType === 'Funnel' ? funnelsData.value : contactStore.getContactsByFunnelId(route.params.id)
+  const dataToSearch = headerConfigData.value.searchType == 'Funnel' ? funnelsData.value : contactStore.getContactsByFunnelId(route.params.id)
   const fuse = new Fuse(dataToSearch, fuseConfigFunnelsAndContacts)
 
   inputData.value = fuse.search(inputSearch.value)
@@ -54,7 +54,7 @@ const handleMobileHeaderState = () => {
 }
 
 const dispatchButtonAction = async () => {
-  if (headerConfigData.value.action === 'Create Contact') {
+  if (headerConfigData.value.action == 'Create Contact') {
     const isStepEmpty = await stepStore.isFunnelEmpty(route.params.id)
     if (isStepEmpty) {
       toastStore.errorToast("Create At Least One Step!")
@@ -126,18 +126,18 @@ const RouterOptions = [
         <div v-if="inputData.length > 0" class="mt-2 input-drop-down py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
           <InputSearchFunnel
             @click="resetInputData"
-            v-if="headerConfigData.searchType === 'Funnel'"
+            v-if="headerConfigData.searchType == 'Funnel'"
             v-for="funnelData in inputData"
             :funnelData="funnelData.item"
           />
           <InputSearchContact
             @click="resetInputData"
-            v-else-if="headerConfigData.searchType === 'Contacts'"
+            v-else-if="headerConfigData.searchType == 'Contacts'"
             v-for="contactData in inputData"
             :contactData="contactData.item"
           />
         </div>
-        <div v-if="inputData.length === 0 && inputSearch" class="mt-2 text-secondary input-drop-down d-flex align-items-center py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
+        <div v-if="inputData.length == 0 && inputSearch" class="mt-2 text-secondary input-drop-down d-flex align-items-center py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
           <i class="bi bi-exclamation-diamond"></i>
           <p class="m-0 ms-3"> Nothing was Found </p>
         </div>

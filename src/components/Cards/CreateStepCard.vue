@@ -18,6 +18,7 @@ const createNewStep = () => {
 
   stepsManagement.createStep(payload)
   handleCreation()
+  stepName.value = ''
 }
 
 const handleCreation = () => {
