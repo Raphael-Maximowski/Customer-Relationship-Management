@@ -24,7 +24,15 @@ export const userConfigStore = defineStore('userConfig', () => {
     const userWidth = computed(() => userConfig.value.viewPortWidth)
 
     const setMessageToSend = (newDescription) => {
+      const toastStore = toastManagementStore()
+      if (!newDescription) {
+        toastStore.errorToast("Inser a Valid Message")
+        return
+      }
+
+
       userConfig.value.messageToSend = newDescription
+      toastStore.succesToast("Message Changed!")
     }
 
     const setUserName = (newName) => {
@@ -34,6 +42,7 @@ export const userConfigStore = defineStore('userConfig', () => {
         return
       }
       userConfig.value.userName = newName
+      toastStore.succesToast('User name Changed!')
     }
 
     const setUserviewPortWith = (viewPort) => {

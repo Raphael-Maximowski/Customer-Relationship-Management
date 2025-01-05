@@ -4,16 +4,16 @@ import { toastManagementStore } from '@/stores/toastManagement.ts'
 
 export const contactsManagementStore = defineStore('contactsManagementStore', () => {
   const contactsState = ref([
-    { name: '1', contactPosition: 0, id: 1, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: '2', contactPosition: 1, id: 2, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: '3', contactPosition: 2, id: 3, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: 'D', contactPosition: 0, id: 4, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: 'E', contactPosition: 1, id: 5, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: 'F', contactPosition: 2, id: 6, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: 'G', contactPosition: 3, id: 7, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: '4', contactPosition: 0, id: 8, stepId: 3, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: '5', contactPosition: 1, id: 9, stepId: 3, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
-    { name: '6', contactPosition: 0, id: 10,stepId: 4, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 9999-9999', contactCompany: 'Explorex', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ContactExample1', contactPosition: 0, id: 1, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ContactExample2', contactPosition: 1, id: 2, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ContactExample3', contactPosition: 2, id: 3, stepId: 1, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ContactExample4', contactPosition: 0, id: 4, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ContactExample5', contactPosition: 1, id: 5, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ExampleContact1', contactPosition: 2, id: 6, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ExampleContact2', contactPosition: 3, id: 7, stepId: 2, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ExampleContact3', contactPosition: 0, id: 8, stepId: 3, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ExampleContact4', contactPosition: 1, id: 9, stepId: 3, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
+    { name: 'ExampleContact4', contactPosition: 0, id: 10,stepId: 4, funnelId: "1", interestIn: 'Participate In the New Project', tradingValue: '1.599,00', contactNumber: '+55 (99) 99999-9999', contactCompany: 'Example Company', contactAddress: 'Main Avenue', contactCNPJ: '11-111-111/0001-11' },
   ])
 
   const succedContactsFromStep = (stepId) => {
@@ -148,13 +148,13 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
           contactsState.value[indexToManipulate].contactPosition--
         }
       }
+
       return
     } else if ( event.added ) {
       const contactToPush = ref(event.added.element)
       contactToPush.value.contactPosition = event.added.newIndex
       contactToPush.value.stepId = stepId
       contactsState.value.push(contactToPush.value)
-
 
       for (let i = 0; i < filteredContacts.length; i++) {
         if (filteredContacts[i].contactPosition >= event.added.newIndex) {
@@ -163,6 +163,12 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
         }
       }
 
+      const duplicatedContacts = contactsState.value.filter((contactInArray) => contactInArray.id == contactToPush.value.id)
+      if (duplicatedContacts.length > 2) {
+        const contactDuplicatedIndex = contactsState.value.findIndex((contactInArray) => contactInArray.id === duplicatedContacts[duplicatedContacts.length - 1])
+
+        contactsState.value.splice(contactDuplicatedIndex, 1)
+      }
       return
     }
 
@@ -193,7 +199,8 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
   }
 
   const getFilteredContacts = (stepId) => {
-    const filteredContacts = contactsGetterState.value.filter((ContactInArray) => ContactInArray.stepId == stepId)
+
+    const filteredContacts = contactsGetterState.value.filter((ContactInArray) => ContactInArray.stepId === stepId)
     return filteredContacts.sort((a, b) => a.contactPosition - b.contactPosition)
   }
 
@@ -223,6 +230,7 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
 
     contactsState.value.push(contactToPush.value)
     toastStore.succesToast("Contact created with succes!")
+    console.log("Contact Created: ", contactToPush.value)
   }
 
   const updateContact = (contactPayload) => {

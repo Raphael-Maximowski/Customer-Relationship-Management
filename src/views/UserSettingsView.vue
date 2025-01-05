@@ -125,7 +125,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="mt-4 d-none d-lg-block">
-          <button @click="saveChanges" type="button" :class="['px-5 btn', userColorData.btn]">Save Changes</button>
+          <button @click="saveChanges" type="button" :class="['px-5 btn text-white', userColorData.btn]">Save Changes</button>
         </div>
       </div>
       <div class="col-12 col-lg-6 h-100 mt-3 mt-lg-0">
@@ -135,7 +135,7 @@ onMounted(() => {
         <input v-model="userMessage" class="form-control" placeholder="Insert the message Sent by WhatsApp"/>
 
         <div class="mt-4 d-lg-none d-block">
-          <button @click="saveChanges" type="button" :class="['px-5 btn', userColorData.btn]">Save Changes</button>
+          <button @click="saveChanges" type="button" :class="['px-5 btn text-white', userColorData.btn]">Save Changes</button>
         </div>
       </div>
     </div>

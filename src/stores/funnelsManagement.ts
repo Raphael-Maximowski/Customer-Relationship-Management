@@ -146,6 +146,8 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
 
     funnelsData.value.push(funnel)
     stepsStore.createStepsForDefaultFunnel(funnel.id)
+
+    console.log("FunnelStore: ", funnelsData.value)
   }
 
   return { totalSuccesFromFunnels ,totalRejectionFromFunnels ,filterReports ,favoriteFunnels ,handleFunnelFavoriteState ,funnelsDataGetter, funnelsData, createFunnel, deleteFunnel, editFunnel, duplicateFunnel }

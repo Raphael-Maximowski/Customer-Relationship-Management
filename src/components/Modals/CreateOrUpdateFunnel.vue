@@ -122,7 +122,7 @@ watch(modalsData, (newValue) => {
             <button
               @click="editMode ? editFunnel() : createFunnel()"
               type="button"
-              :class="['btn border-0', userColorData.btn]">
+              :class="['btn border-0 text-white', userColorData.btn]">
               {{ editMode ? 'Edit' : 'Create' }} </button>
           </div>
         </div>

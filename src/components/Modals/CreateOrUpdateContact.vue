@@ -160,7 +160,7 @@ const createContact = async () => {
   const payload = ref({
     name: contactName.value,
     stepId: contactStep.value,
-    funnelId: route.params.id,
+    funnelId: parseInt(route.params.id),
     interestIn: contactInterestedIn.value,
     tradingValue: contactTradingValue.value,
     contactNumber: contactNumber.value,
@@ -295,7 +295,7 @@ onMounted(() => {
         </div>
         <div class="modal-footer d-flex">
           <button @click="deleteContact" v-if="modalInEditMode" type="button" :class="['btn py-2 px-3', userColorData.emptyBtn]">Delete Contact</button>
-          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" :class="['btn py-2 px-3', userColorData.btn ]"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
+          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" :class="['text-white btn py-2 px-3 text-white', userColorData.btn ]"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
         </div>
       </div>
     </div>

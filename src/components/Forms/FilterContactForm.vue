@@ -145,7 +145,7 @@ watch(funnelToFilter, (newValue) => {
       Filters
       <i :class="[showFiltersState ? 'bi bi-chevron-compact-up' : 'bi bi-chevron-compact-down', 'ms-3']"></i>
     </button>
-    <button @click="filterContacts" type="button" :class="['btn', userColorData.btn]"><i class="bi bi-search me-3"></i> Search
+    <button @click="filterContacts" type="button" :class="['btn text-white', userColorData.btn]"><i class="bi bi-search me-3"></i> Search
     </button>
   </div>
   <div class="mx-5 mb-3" v-if="showFiltersState">

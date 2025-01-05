@@ -145,7 +145,7 @@ const RouterOptions = [
 
     </div>
     <div class="w-25 h-100 d-flex align-items-center justify-content-center">
-      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['btn fs-6 w-50 py-2', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['btn fs-6 w-50 py-2 text-white', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
   </div>
 
@@ -158,7 +158,7 @@ const RouterOptions = [
       </button>
     </div>
     <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
-      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['ms-5 btn px-5', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['ms-5 btn px-5 text-white', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
     <div v-if="mobileHeaderState" :class="['d-flex align-items-center flex-column mobile-header-body position-absolute w-100 z-3', userColorData.color]">
       <div class="w-75">
