@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import FunnelCard from '@/components/Cards/FunnelCard.vue'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import CreateOrUpdateFunnel from '@/components/Modals/CreateOrUpdateFunnel.vue'
 import { userConfigStore } from '@/stores/userConfigManagement.ts'

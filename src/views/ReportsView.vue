@@ -1,5 +1,4 @@
 <script setup>
-
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { RouterView } from 'vue-router'

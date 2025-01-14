@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Fuse from 'fuse.js'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'

@@ -1,5 +1,4 @@
 <script setup>
-
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { userConfigStore } from '@/stores/userConfigManagement.ts'
 import { useRouter } from 'vue-router'

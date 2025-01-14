@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const headerManagementStore = defineStore('headerManagement', () => {
   const headerDataState = ref({

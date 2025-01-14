@@ -1,6 +1,5 @@
 <script setup>
-
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import FilterContactForm from '@/components/Forms/FilterContactForm.vue'
 import ContactFilteredCard from '@/components/Cards/ContactFilteredCard.vue'

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { useRouter } from 'vue-router'

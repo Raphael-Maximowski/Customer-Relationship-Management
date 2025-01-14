@@ -1,8 +1,5 @@
 <script setup>
-
-import { onMounted } from 'vue'
-
-const props =  defineProps({
+defineProps({
   colorData: { type: Object, required: true }
 })
 

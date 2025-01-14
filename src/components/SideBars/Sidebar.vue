@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { userConfigStore } from '@/stores/userConfigManagement.ts'
-import { buttonsManagementStore } from '@/stores/headerManagement.ts'
 import { computed, ref } from 'vue'
-import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const userConfig = userConfigStore()
 const router = useRouter()
-const userConfigWidth = computed(() => userConfig.userWidth)
 const userColorData = computed(() => userConfig.userColorData)
 const sideBarState = ref(false)
 const dropUpState = ref(false)

@@ -1,7 +1,7 @@
 <script setup>
 
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-import { computed, onMounted } from 'vue'
+import { computed} from 'vue'
 import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const modalStore = modalsManagementStore()
