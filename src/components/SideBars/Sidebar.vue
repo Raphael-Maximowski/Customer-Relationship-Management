@@ -8,6 +8,7 @@ import { useRoute, useRouter } from 'vue-router'
 const userConfig = userConfigStore()
 const router = useRouter()
 const userConfigWidth = computed(() => userConfig.userWidth)
+const userColorData = computed(() => userConfig.userColorData)
 const sideBarState = ref(false)
 const dropUpState = ref(false)
 
@@ -43,49 +44,18 @@ const RouterOptions = [
       },
       {
         name: 'Reports',
-        routeName: '',
+        routeName: 'ReportsView',
         icon: 'bi bi-file-earmark-plus-fill',
         id: 3
       },
       {
         name: 'Favorites',
-        routeName: '',
-        icon: 'bi bi-heart-fill',
+        routeName: 'FavoriteListView',
+        icon: 'bi bi-pin-angle-fill',
         id: 4
       },
-      {
-        name: 'Create',
-        routeName: '',
-        icon: 'bi bi-cloud-plus-fill',
-        id: 5
-      }
     ]
   },
-  {
-    name: 'User Options',
-    icon: 'bi bi-person-circle',
-    id: 2,
-    router: [
-      {
-        name: 'Configuration',
-        routeName: '',
-        icon: 'bi bi-gear-fill',
-        id: 6
-      },
-      {
-        name: 'About the Project',
-        routeName: '',
-        icon: 'bi bi-exclamation-triangle-fill',
-        id: 8
-      },
-      {
-        name: 'Contact Creator',
-        routeName: '',
-        icon: 'bi bi-telephone-fill',
-        id: 9
-      }
-    ]
-  }
 ]
 </script>
 
@@ -98,19 +68,19 @@ const RouterOptions = [
       @click="handleSideBarState"
       :style="{ width: sideBarState ? '270px' : '110px', top: '0px', left: '0px' }"
       class="vh-100 d-flex flex-column  aside-content position-fixed">
-      <div class="aside-header bg-primary w-100 d-flex align-items-center justify-content-center">
+      <div :class="['aside-header w-100 d-flex align-items-center justify-content-center', userColorData.color]">
         <i class="bi bi-grid-fill fs-1 text-white"></i>
       </div>
       <div class="d-flex flex-column align-items-center bg-white flex-grow-1">
         <div class="bottom-0 mb-4 position-absolute">
           <div  :style="{ width: sideBarState ? '220px' : '60px'}"
-                class="router-option d-flex align-items-center justify-content-between"
+                class="router-option d-flex align-items-center"
+                @click.stop="handleSideBarRoute({ routeName: 'User Settings' })"
           >
-            <i class="bi bi-person-circle fs-4 me-4 text-white bg-primary px-3 py-2 rounded-3"></i>
+            <i :class="['bi bi-gear-fill fs-4 me-4 text-white px-3 py-2 rounded-3', userColorData.color]"></i>
             <transition name="fade">
-            <div v-if="sideBarState" class="d-flex w-100 justify-content-around align-items-center">
-              <p class="fw-bold text-primary m-0 fs-5 me-2"> User Name </p>
-              <i :class="[ dropUpState ? 'bi-chevron-down' : 'bi-chevron-up', 'bi fw-bold text-primary']"></i>
+            <div v-if="sideBarState" class="d-flex w-100  align-items-center">
+              <p :class="['fw-bold m-0 fs-5', userColorData.text]"> Settings </p>
             </div>
             </transition>
           </div>
@@ -121,15 +91,15 @@ const RouterOptions = [
           <div class="mt-4"
                :key="option.id"
                v-for="option in route.router"
-               v-if="route.name !== 'User Options'"
+               v-if="route.name != 'User Options'"
           >
             <div
               @click.stop="handleSideBarRoute(option)"
               :style="{ width: sideBarState ? '220px' : '60px' }"
               class="d-flex router-option align-items-center">
-              <i :class="[option.icon, 'fs-4 me-4 text-white bg-primary px-3 py-2 rounded-3']"></i>
+              <i :class="[option.icon, 'fs-4 me-4 text-white px-3 py-2 rounded-3', userColorData.color]"></i>
               <transition name="fade">
-                <p v-if="sideBarState" class="fw-bold text-primary m-0 fs-5"> {{ option.name }} </p>
+                <p v-if="sideBarState" :class="['fw-bold m-0 fs-5', userColorData.text]"> {{ option.name }} </p>
               </transition>
             </div>
           </div>
@@ -140,6 +110,10 @@ const RouterOptions = [
 </template>
 
 <style scoped>
+.drop-up {
+  border: 1px solid #EBEBEB;
+}
+
 .aside-content {
   transition: 0.5s;
 }

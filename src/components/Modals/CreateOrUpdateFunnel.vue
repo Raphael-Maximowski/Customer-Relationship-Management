@@ -5,11 +5,14 @@ import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
 import { computed, ref, watch } from 'vue'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
 const toastManagement = toastManagementStore()
 const funnelsManagement = funnelsManagementStore()
 const modalsManagement = modalsManagementStore()
 const modalsData = computed(() => modalsManagement.modalData)
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 const funnelMockUp = ref({})
 const editMode = ref(false)
 
@@ -81,7 +84,7 @@ const handleModalState = () => {
 }
 
 watch(modalsData, (newValue) => {
-  if (newValue.modalData.dataType === 'funnel') {
+  if (newValue.modalData.dataType == 'funnel') {
     funnelMockUp.value = newValue.modalData.funnelData
     setNewValues({ name: funnelMockUp.value.name, description: funnelMockUp.value.description })
     editMode.value = true
@@ -94,7 +97,7 @@ watch(modalsData, (newValue) => {
 </script>
 
 <template>
-    <div :class="['modal fade show modal-background', modalsData.modalView === 'CreateOrUpdateFunnel' ? 'd-block' : '']" tabindex="-1" >
+    <div :class="['modal fade show modal-background', modalsData.modalView == 'CreateOrUpdateFunnel' ? 'd-block' : '']" tabindex="-1" >
       <div class="modal-dialog modal-lg modal-dialog-centered w-100">
         <div class="modal-content px-4 py-3">
           <div class="modal-header">
@@ -119,7 +122,7 @@ watch(modalsData, (newValue) => {
             <button
               @click="editMode ? editFunnel() : createFunnel()"
               type="button"
-              class="btn btn-primary border-0">
+              :class="['btn border-0 text-white', userColorData.btn]">
               {{ editMode ? 'Edit' : 'Create' }} </button>
           </div>
         </div>

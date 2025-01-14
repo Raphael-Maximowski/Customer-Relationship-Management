@@ -10,9 +10,11 @@ import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 const userConfig = userConfigStore()
 const stepStore = stepsManagementStore()
 const headerStore = headerManagementStore()
+const userColorData = computed(() => userConfig.userColorData)
 const userConfigWidth = computed(() => userConfig.userWidth)
 const route = useRoute()
 
+userConfig.startPersistState = true
 
 const updateUserViewPort = () => {
   userConfig.setUserviewPortWith(window.innerWidth)
@@ -32,13 +34,22 @@ onUnmounted(() => {
 watch(route, (newRoute) => {
   switch (newRoute.name){
     case 'funnelsView':
-      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel', inputMessage: 'Search For Funnels' })
+      headerStore.setHeaderData({ buttonMessage: 'Create Funnel', headerMessage: 'Scope your Clients however you want!', action: 'Create Funnel', inputMessage: 'Search For Funnels', searchType: 'Funnel' })
       break;
     case 'CRMStepsView':
-      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact', inputMessage: 'Search For Contacts' })
+      headerStore.setHeaderData({ buttonMessage: 'Create Contact', headerMessage: 'Have a better management of your Clients!', action: 'Create Contact', inputMessage: 'Search For Contacts', searchType: 'Contacts' })
       break;
-    case 'ContactsListView': 
-      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '' })
+    case 'ContactsListView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Filter your Contacts!', action: 'Create Contact', inputMessage: '', searchType: '' })
+      break;
+    case 'FavoriteListView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Check All of Your Favorites!', action: 'Create Contact', inputMessage: '', searchType: '' })
+      break;
+    case 'User Settings':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Change your Settings!', action: '', inputMessage: '', searchType: '' })
+      break;
+    case 'ReportsView':
+      headerStore.setHeaderData({ buttonMessage: '', headerMessage: 'Check all of your Reports!', action: '', inputMessage: '', searchType: '' })
       break;
   }
 })
@@ -48,7 +59,9 @@ watch(route, (newRoute) => {
 <template>
   <div class="d-flex vw-100 vh-100">
     <Sidebar v-if="userConfigWidth > 992" />
-    <div class="flex-grow-1 flex-1 d-flex overflow-x-auto flex-column body-content">
+    <div
+      :style="{'--dynamic-color': userColorData.hexa}"
+      class="flex-grow-1 flex-1 d-flex overflow-x-auto flex-column body-content">
       <Header />
       <RouterView />
     </div>

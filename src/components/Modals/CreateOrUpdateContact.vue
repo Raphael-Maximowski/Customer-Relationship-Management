@@ -7,17 +7,20 @@ import { useRoute } from 'vue-router'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
 import { contactsManagementStore } from '@/stores/contactsManagement.ts'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.ts'
 
-const editState = ref(false)
 const route = useRoute()
 const toastStore = toastManagementStore()
 const modalStore = modalsManagementStore()
 const contactStore = contactsManagementStore()
 const stepsStore = stepsManagementStore()
+const userStore = userConfigStore()
+const userColorData = userStore.userColorData
 const modalInEditMode = ref(false)
 const stepsData = computed(() => stepsStore.getSteps(route.params.id))
 const modalDataFromStore = computed(() => modalStore.modalData)
 const contactOriginalMockup = ref('')
+const cantChooseStep = ref(false)
 
 const validationSchema = {
   contactName: yup.string().required('Name field can\'t be empty')
@@ -58,13 +61,14 @@ const [contactStep] = defineField('contactStep')
 const [contactCompany] = defineField('contactCompany')
 const [contactAddress] = defineField('contactAddress')
 const [contactCNPJ] = defineField('contactCNPJ')
+const [contactFavoriteState] = defineField('contactFavoriteState')
 
 const handleModalState = () => {
   modalStore.handleModalState()
 }
 
 const deleteContact = () => {
-  contactStore.deleteContact(contactOriginalMockup.value.id)
+  contactStore.deleteContact(contactOriginalMockup.value)
   handleModalState()
 }
 
@@ -76,8 +80,13 @@ const handleNewStepForContact = (stepData) => {
 }
 
 const checkFirstStepWhenMounted = () => {
-  const checkIfStartStepExists = stepsData.value.find((StepInArray) => StepInArray.name === 'No Contact')
+  const checkIfStartStepExists = stepsData.value.find((StepInArray) => StepInArray.name == 'No Contact')
   if (!checkIfStartStepExists) {
+    if (!stepsData.value[0]) {
+      cantChooseStep.value = true
+      return
+    }
+
     setValues({
       contactStep: stepsData.value[0].id
     })
@@ -151,7 +160,7 @@ const createContact = async () => {
   const payload = ref({
     name: contactName.value,
     stepId: contactStep.value,
-    funnelId: route.params.id,
+    funnelId: parseInt(route.params.id),
     interestIn: contactInterestedIn.value,
     tradingValue: contactTradingValue.value,
     contactNumber: contactNumber.value,
@@ -164,8 +173,21 @@ const createContact = async () => {
   handleModalState()
 }
 
+const handleContactFavoriteState = () => {
+  setValues({
+    contactFavoriteState: !contactFavoriteState.value
+  })
+  contactStore.setFavoriteState(contactOriginalMockup.value)
+}
+
+watch(stepsData.value, (newValue) => {
+  if (newValue.length > 0) {
+    cantChooseStep.value = false
+  }
+})
+
 watch(modalDataFromStore.value, (newValue) => {
-  if (newValue.modalView === 'CreateOrUpdateContact' && newValue.modalState) {
+  if (newValue.modalView == 'CreateOrUpdateContact' && newValue.modalState) {
 
     if (newValue.editMode) {
       modalInEditMode.value = true
@@ -178,7 +200,8 @@ watch(modalDataFromStore.value, (newValue) => {
         contactStep: newValue.modalData.stepId,
         contactCompany: newValue.modalData.contactCompany,
         contactAddress: newValue.modalData.contactAddress,
-        contactCNPJ: newValue.modalData.contactCNPJ
+        contactCNPJ: newValue.modalData.contactCNPJ,
+        contactFavoriteState: newValue.modalData.favorite
       })
 
       return
@@ -199,15 +222,27 @@ onMounted(() => {
 
 <template>
   <div
-    :class="[ modalDataFromStore.modalView === 'CreateOrUpdateContact' && modalDataFromStore.modalState ? 'd-block' : '' , 'modal modal-background']"
+    :class="[ modalDataFromStore.modalView == 'CreateOrUpdateContact' && modalDataFromStore.modalState ? 'd-block' : '' , 'modal modal-background']"
     tabindex="-1" role="dialog">
     <div style="right: 0px" class="modal-dialog position-absolute modal-lg m-0" role="document">
       <div class="modal-content vh-100 px-3">
-        <div class="d-flex modal-header text-primary">
-          <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
-          <h5 class="fw-bold modal-title"> {{ editState ? 'Update' : 'Create' }} Contact</h5>
+        <div :class="['d-flex modal-header justify-content-between', userColorData.text]">
+          <div class="d-flex align-items-center">
+            <i @click="handleModalState" class="bi bi-chevron-right fs-5 me-3"></i>
+            <h5 class="fw-bold modal-title"> {{ modalInEditMode ? 'Update' : 'Create' }} Contact</h5>
+          </div>
+          <div class="d-flex align-items-center">
+            <button
+              v-if="modalInEditMode"
+              class="bg-transparent border-0">
+              <i
+                @click="handleContactFavoriteState"
+                :class="[ contactFavoriteState ? 'bi-pin-angle-fill' : 'bi-pin-angle', 'bi py-1 px-2 rounded-2 text-white', userColorData.color]"></i>
+            </button>
+          </div>
+
         </div>
-        <div class="modal-body overflow-y-auto text-primary">
+        <div :class="['modal-body overflow-y-auto', userColorData.text]">
           <p class="fw-bold">Mandatory Information</p>
           <div class="my-3">
             <label class="mb-1">Name: </label>
@@ -226,17 +261,17 @@ onMounted(() => {
             <label class="mb-1">Contact Number: </label>
             <input v-mask="'+## (##) #####-####'" v-model="contactNumber" class="form-control " placeholder="+55 (DD) 0000-0000" />
           </div>
-          <div class="my-3 ">
+          <div class="my-3 " v-if="!cantChooseStep">
             <label class="mb-1">Contact Step: </label>
             <div class="d-flex flex-wrap">
               <div
                 v-for="(stepData, index) in stepsData"
                 class="">
                 <button
-                  :style="{ borderRadius: index === stepsData.length - 1 ? '0px 10px 10px 0px' : index === 0 ? '10px 0px 0px 10px' : '0px 0px 0px 0px' }"
+                  :style="{ borderRadius: index == stepsData.length - 1 ? '0px 10px 10px 0px' : index == 0 ? '10px 0px 0px 10px' : '0px 0px 0px 0px' }"
                   @click="handleNewStepForContact(stepData)"
                   type="button"
-                  :class="[ stepData.id === contactStep ? 'btn-primary' : 'btn-outline-primary' ,'btn h-100 px-3 py-2']">
+                  :class="[ stepData.id === contactStep ? userColorData.btn : userColorData.emptyBtn ,'btn h-100 px-3 py-2']">
                   {{ stepData.name }}
                 </button>
               </div>
@@ -259,8 +294,8 @@ onMounted(() => {
           </div>
         </div>
         <div class="modal-footer d-flex">
-          <button @click="deleteContact" v-if="modalInEditMode" type="button" class="btn btn-danger py-2 px-3">Delete Contact</button>
-          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" class="btn btn-primary py-2 px-3"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
+          <button @click="deleteContact" v-if="modalInEditMode" type="button" :class="['btn py-2 px-3', userColorData.emptyBtn]">Delete Contact</button>
+          <button @click="modalInEditMode ? updateContact() : createContact()  " type="button" :class="['text-white btn py-2 px-3 text-white', userColorData.btn ]"> {{ modalInEditMode ? 'Update' : 'Create' }}  Contact</button>
         </div>
       </div>
     </div>

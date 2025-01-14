@@ -3,20 +3,50 @@ import { userConfigStore } from '@/stores/userConfigManagement.ts'
 import { computed, ref } from 'vue'
 import { headerManagementStore } from '@/stores/headerManagement.ts'
 import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-
 import { useRoute, useRouter } from 'vue-router'
 import { stepsManagementStore } from '@/stores/stepsManagement.ts'
 import { toastManagementStore } from '@/stores/toastManagement.ts'
+import InputSearchContact from '@/components/Cards/InputSearchFunnel.vue'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import Fuse from 'fuse.js'
+import InputSearchFunnel from '@/components/Cards/InputSearchContact.vue'
 
 const userConfig = userConfigStore()
 const stepStore = stepsManagementStore()
 const toastStore = toastManagementStore()
+const funnelsStore = funnelsManagementStore()
+const funnelsData = computed(() => funnelsStore.funnelsDataGetter)
+const contactStore = contactsManagementStore()
 const router = useRouter()
 const headerStore = headerManagementStore()
 const headerConfigData = computed(() => headerStore.headerDataGetter)
+const userColorData = computed(() => userConfig.userColorData)
 const modalsStore = modalsManagementStore()
 const userConfigWidth = computed(() => userConfig.userWidth)
 const route = useRoute()
+const userConfigName = computed(() => userConfig.userName)
+const inputData = ref([])
+const inputSearch = ref('')
+const fuseConfigFunnelsAndContacts = {
+  keys: [
+    { name: 'name', getFn: (object) => object.name }
+  ],
+  threshold: 0.2
+}
+
+const resetInputData = () => {
+  inputData.value = []
+  inputSearch.value = ''
+}
+
+const searchAction = () => {
+  const dataToSearch = headerConfigData.value.searchType == 'Funnel' ? funnelsData.value : contactStore.getContactsByFunnelId(route.params.id)
+  const fuse = new Fuse(dataToSearch, fuseConfigFunnelsAndContacts)
+
+  inputData.value = fuse.search(inputSearch.value)
+}
+
 
 const mobileHeaderState = ref(false)
 const handleMobileHeaderState = () => {
@@ -24,7 +54,7 @@ const handleMobileHeaderState = () => {
 }
 
 const dispatchButtonAction = async () => {
-  if (headerConfigData.value.action === 'Create Contact') {
+  if (headerConfigData.value.action == 'Create Contact') {
     const isStepEmpty = await stepStore.isFunnelEmpty(route.params.id)
     if (isStepEmpty) {
       toastStore.errorToast("Create At Least One Step!")
@@ -65,43 +95,18 @@ const RouterOptions = [
       },
       {
         name: 'Favorites',
-        routeName: '',
-        icon: 'bi bi-heart-fill',
+        routeName: 'FavoriteListView',
+        icon: 'bi bi-pin-angle-fill',
         id: 4
       },
       {
-        name: 'Create',
-        routeName: '',
-        icon: 'bi bi-cloud-plus-fill',
+        name: 'Settings',
+        routeName: 'User Settings',
+        icon: 'bi bi-gear-fill',
         id: 5
       }
     ]
   },
-  {
-    name: 'User Options',
-    icon: 'bi bi-person-circle',
-    id: 2,
-    router: [
-      {
-        name: 'Configuration',
-        routeName: '',
-        icon: 'bi bi-gear-fill',
-        id: 6
-      },
-      {
-        name: 'About the Project',
-        routeName: '',
-        icon: 'bi bi-exclamation-triangle-fill',
-        id: 8
-      },
-      {
-        name: 'Contact Creator',
-        routeName: '',
-        icon: 'bi bi-telephone-fill',
-        id: 9
-      }
-    ]
-  }
 ]
 
 </script>
@@ -112,19 +117,40 @@ const RouterOptions = [
     class="d-flex align-items-center header-desktop w-100 ">
     <div class="w-50 d-flex flex-column justify-content-center h-100
 ">
-        <p class="ms-5 text-primary m-0 fs-4 fw-bold">Welcome User</p>
-      <p class="ms-5 fs-4 m-0 text-primary fw-bold"> {{ headerConfigData.headerMessage }} </p>
+        <p :class="['ms-5 m-0 fs-4 fw-bold', userColorData.text]">Welcome {{ userConfigName }}</p>
+      <p :class="['ms-5 fs-4 m-0 fw-bold', userColorData.text]"> {{ headerConfigData.headerMessage }} </p>
     </div>
-    <div class="w-25 h-100 d-flex align-items-center">
-      <input v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
+    <div class="w-25 h-100 d-flex flex-column justify-content-center position-relative">
+      <input v-model="inputSearch" @input="() => searchAction()" v-if="headerConfigData.inputMessage" :placeholder="headerConfigData.inputMessage" class="form-control py-2 w-100" />
+      <div>
+        <div v-if="inputData.length > 0" class="mt-2 input-drop-down py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
+          <InputSearchFunnel
+            @click="resetInputData"
+            v-if="headerConfigData.searchType == 'Funnel'"
+            v-for="funnelData in inputData"
+            :funnelData="funnelData.item"
+          />
+          <InputSearchContact
+            @click="resetInputData"
+            v-else-if="headerConfigData.searchType == 'Contacts'"
+            v-for="contactData in inputData"
+            :contactData="contactData.item"
+          />
+        </div>
+        <div v-if="inputData.length == 0 && inputSearch" class="mt-2 text-secondary input-drop-down d-flex align-items-center py-2 bg-white z-3 rounded-3 px-3 w-100 position-absolute">
+          <i class="bi bi-exclamation-diamond"></i>
+          <p class="m-0 ms-3"> Nothing was Found </p>
+        </div>
+      </div>
+
     </div>
     <div class="w-25 h-100 d-flex align-items-center justify-content-center">
-      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" class="btn btn-primary fs-6 w-50 py-2 "> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['btn fs-6 w-50 py-2 text-white', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
   </div>
 
   <div v-else >
-    <div class="flex-column  text-center d-flex align-items-center justify-content-center mobile-header bg-primary">
+    <div :class="['flex-column  text-center d-flex align-items-center justify-content-center mobile-header', userColorData.color]">
       <h1 class="text-white title">CUSTOMER RELATIONSHIP</h1>
       <h2 class="text-white sub-title">MANAGEMENT</h2>
       <button style="top: 10px; left: 10px" class="position-absolute border-0 bg-transparent">
@@ -132,9 +158,9 @@ const RouterOptions = [
       </button>
     </div>
     <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
-      <button @click="dispatchButtonAction" type="button" class="ms-5 btn px-5 btn-primary"> {{ headerConfigData.buttonMessage }} </button>
+      <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['ms-5 btn px-5 text-white', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
-    <div v-if="mobileHeaderState" class="d-flex align-items-center flex-column mobile-header-body position-absolute bg-primary w-100 z-3">
+    <div v-if="mobileHeaderState" :class="['d-flex align-items-center flex-column mobile-header-body position-absolute w-100 z-3', userColorData.color]">
       <div class="w-75">
         <div
           :key="routerOption.id"
@@ -159,6 +185,9 @@ const RouterOptions = [
 </template>
 
 <style scoped>
+.input-drop-down {
+  border: 1px solid rgba(211, 211, 211, 0.71);
+}
 
 .router-option {
   border-bottom: 1px solid white;
