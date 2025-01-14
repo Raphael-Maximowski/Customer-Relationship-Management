@@ -26,7 +26,7 @@ const userConfigWidth = computed(() => userConfig.userWidth)
         :funnelData="funnelData"
       />
     </div>
-    <CreateOrUpdateFunnel :modalState="modalState" />
+    <CreateOrUpdateFunnel/>
   </div>
 </template>
 

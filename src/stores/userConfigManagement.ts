@@ -67,15 +67,4 @@ export const userConfigStore = defineStore('userConfig', () => {
       setUserviewPortWith,
       userWidth
     }
-  },
-  {
-    persist: {
-      enabled: true,
-      strategies: [
-        {
-          key: 'userConfig', // Nome da chave no localStorage
-          storage: localStorage // Tipo de armazenamento
-        }
-      ]
-    }
-  })
+  }, { persist: true })
