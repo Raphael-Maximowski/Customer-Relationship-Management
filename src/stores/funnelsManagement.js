@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.js'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
 
 
 export const funnelsManagementStore = defineStore('funnelsManagement', () => {

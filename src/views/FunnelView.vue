@@ -2,9 +2,9 @@
 
 import FunnelCard from '@/components/Cards/FunnelCard.vue'
 import { computed } from 'vue'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
 import CreateOrUpdateFunnel from '@/components/Modals/CreateOrUpdateFunnel.vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const funnelsStore = funnelsManagementStore()
 const funnelsData = computed(() => funnelsStore.funnelsDataGetter)

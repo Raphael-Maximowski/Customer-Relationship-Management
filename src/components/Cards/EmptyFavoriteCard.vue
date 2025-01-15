@@ -1,5 +1,5 @@
 <script setup>
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const userStore = userConfigStore()
 const userColorData = userStore.userColorData

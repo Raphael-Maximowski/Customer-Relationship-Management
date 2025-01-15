@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import ColorCard from '@/components/Cards/ColorCard.vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const userConfig = userConfigStore()
 const userColorData = computed(() => userConfig.userColorData)

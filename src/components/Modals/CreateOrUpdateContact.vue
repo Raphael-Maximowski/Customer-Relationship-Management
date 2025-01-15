@@ -1,13 +1,13 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { modalsManagementStore } from '@/stores/modalsManagement.ts'
+import { modalsManagementStore } from '@/stores/modalsManagement.js'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { useRoute } from 'vue-router'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.js'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const route = useRoute()
 const toastStore = toastManagementStore()

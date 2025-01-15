@@ -2,8 +2,8 @@
 import ReturnFormButton from '@/components/Buttons/returnFormButton.vue'
 import Chart from 'chart.js/auto';
 import { nextTick, onMounted, ref, watch } from 'vue'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
 
 const funnelsStore = funnelsManagementStore()
 const stepsStore = stepsManagementStore()

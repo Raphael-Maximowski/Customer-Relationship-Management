@@ -1,6 +1,6 @@
 <script setup>
-import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { modalsManagementStore } from '@/stores/modalsManagement.js'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const modalStore = modalsManagementStore()
 const userStore = userConfigStore()

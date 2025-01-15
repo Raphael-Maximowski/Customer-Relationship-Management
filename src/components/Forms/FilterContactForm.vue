@@ -1,10 +1,10 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import Fuse from 'fuse.js'
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
+import { toastManagementStore } from '@/stores/toastManagement.js'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const showFiltersState = ref(false)
 

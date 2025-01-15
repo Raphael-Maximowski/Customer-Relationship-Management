@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
 import { useRoute } from 'vue-router'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 const createState = ref(false)
 const stepName = ref('')
 const stepsManagement = stepsManagementStore()

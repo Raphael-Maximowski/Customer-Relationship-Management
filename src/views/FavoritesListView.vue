@@ -1,11 +1,11 @@
 <script setup>
 import FavoriteContactCard from '@/components/Cards/FavoriteContactCard.vue'
 import FavoriteFunnelCard from '@/components/Cards/FavoriteFunnelCard.vue'
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
 import { computed, onMounted } from 'vue'
 import EmptyFavoriteCard from '@/components/Cards/EmptyFavoriteCard.vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const contactsStore = contactsManagementStore()
 const funnelStore = funnelsManagementStore()

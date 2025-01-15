@@ -1,7 +1,7 @@
 <script setup>
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
 import { useRouter } from 'vue-router'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const contactStore = contactsManagementStore()
 const userStore = userConfigStore()
