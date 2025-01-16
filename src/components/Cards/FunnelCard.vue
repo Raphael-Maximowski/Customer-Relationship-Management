@@ -1,9 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { modalsManagementStore } from '@/stores/modalsManagement.ts'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { modalsManagementStore } from '@/stores/modalsManagement.js'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
 import { useRouter } from 'vue-router'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const modalManagement = modalsManagementStore()
 const funnelsManagement = funnelsManagementStore()

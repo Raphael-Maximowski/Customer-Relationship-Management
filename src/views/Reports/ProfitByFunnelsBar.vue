@@ -2,7 +2,7 @@
 import ReturnFormButton from '@/components/Buttons/returnFormButton.vue'
 import Chart from 'chart.js/auto';
 import { onMounted } from 'vue'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
 
 const funnelStore = funnelsManagementStore()
 const reportData = funnelStore.filterReports()

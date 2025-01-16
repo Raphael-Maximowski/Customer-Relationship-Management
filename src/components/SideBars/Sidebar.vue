@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -9,6 +9,13 @@ const userColorData = computed(() => userConfig.userColorData)
 const sideBarState = ref(false)
 const dropUpState = ref(false)
 
+interface routeInterface  {
+  name: string,
+  routeName: string,
+  icon: string,
+  id: number
+}
+
 const handleSideBarState = () => {
   sideBarState.value = !sideBarState.value
 }
@@ -17,7 +24,9 @@ const handleDropUpState = () => {
   dropUpState.value = !dropUpState.value
 }
 
-const handleSideBarRoute = (routeToPush) => {
+const handleSideBarRoute = (routeToPush: routeInterface) => {
+  console.log("Route: ", routeToPush)
+
   router.push({ name: routeToPush.routeName })
 }
 
@@ -54,6 +63,13 @@ const RouterOptions = [
     ]
   },
 ]
+
+const settingsData = {
+  name: 'Settings',
+  routeName: 'User Settings',
+  icon: 'bi bi-gear-fill',
+  id: 5
+}
 </script>
 
 <template>
@@ -72,7 +88,7 @@ const RouterOptions = [
         <div class="bottom-0 mb-4 position-absolute">
           <div  :style="{ width: sideBarState ? '220px' : '60px'}"
                 class="router-option d-flex align-items-center"
-                @click.stop="handleSideBarRoute({ routeName: 'User Settings' })"
+                @click.stop="handleSideBarRoute(settingsData)"
           >
             <i :class="['bi bi-gear-fill fs-4 me-4 text-white px-3 py-2 rounded-3', userColorData.color]"></i>
             <transition name="fade">

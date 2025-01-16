@@ -1,16 +1,20 @@
 <script setup>
 
 import { useRouter } from 'vue-router'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
-import { computed } from 'vue'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
+import { computed, onMounted } from 'vue'
 
 const router = useRouter()
 const userStore = userConfigStore()
-const userColorData = computed(() => userStore.userColorData)
+const userColorData = computed(() => userStore.userColorData);
 
 const redirectToMainPage = () => {
   router.push({ name: 'ReportsView' })
 }
+
+onMounted(() => {
+  console.log("UserColor: ", userColorData.value)
+})
 
 </script>
 

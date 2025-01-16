@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import Sidebar from '@/components/SideBars/Sidebar.vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 import Header from '@/components/Headers/Header.vue'
-import { headerManagementStore } from '@/stores/headerManagement.ts'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { headerManagementStore } from '@/stores/headerManagement.js'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
 
 const userConfig = userConfigStore()
 const stepStore = stepsManagementStore()
@@ -13,8 +13,6 @@ const headerStore = headerManagementStore()
 const userColorData = computed(() => userConfig.userColorData)
 const userConfigWidth = computed(() => userConfig.userWidth)
 const route = useRoute()
-
-userConfig.startPersistState = true
 
 const updateUserViewPort = () => {
   userConfig.setUserviewPortWith(window.innerWidth)

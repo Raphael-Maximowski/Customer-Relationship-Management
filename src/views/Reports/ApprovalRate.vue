@@ -1,6 +1,6 @@
 <script setup>
 import ReturnFormButton from '@/components/Buttons/returnFormButton.vue'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
 import { onMounted, ref } from 'vue'
 import Chart from 'chart.js/auto';
 

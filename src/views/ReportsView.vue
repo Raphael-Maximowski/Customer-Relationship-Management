@@ -2,9 +2,9 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { RouterView } from 'vue-router'
-import { reportsModule } from '@/stores/reportsModule.ts'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
+import { reportsModule } from '@/stores/reportsModule.js'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
+import { toastManagementStore } from '@/stores/toastManagement.js'
 
 const router = useRouter()
 const toastStore = toastManagementStore()

@@ -1,9 +1,9 @@
 <script setup>
 import { computed, onMounted } from 'vue'
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
 import FilterContactForm from '@/components/Forms/FilterContactForm.vue'
 import ContactFilteredCard from '@/components/Cards/ContactFilteredCard.vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const contactsStore = contactsManagementStore()
 const contactsData = computed(() => contactsStore.contactsGetterState)

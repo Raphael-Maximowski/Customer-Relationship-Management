@@ -1,6 +1,6 @@
 <script setup>
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 import { useRouter } from 'vue-router'
 
 const userStore = userConfigStore()

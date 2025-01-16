@@ -2,7 +2,7 @@
 defineProps({
   colorData: { type: Object, required: true }
 })
-
+ 
 </script>
 
 <template>

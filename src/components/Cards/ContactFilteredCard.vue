@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 import { computed } from 'vue'
 
 const router = useRouter()

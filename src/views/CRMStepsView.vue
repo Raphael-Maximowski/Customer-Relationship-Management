@@ -3,7 +3,7 @@ import StepsCard from '@/components/Cards/StepCard.vue'
 import CreateStepCard from '@/components/Cards/CreateStepCard.vue'
 import { useRoute } from 'vue-router'
 import { computed, ref, watch } from 'vue'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
 import CreateOrUpdateContact from '@/components/Modals/CreateOrUpdateContact.vue'
 import draggable from 'vuedraggable'
 

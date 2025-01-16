@@ -1,11 +1,11 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
-import { funnelsManagementStore } from '@/stores/funnelsManagement.ts'
-import { modalsManagementStore } from '@/stores/modalsManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.js'
+import { funnelsManagementStore } from '@/stores/funnelsManagement.js'
+import { modalsManagementStore } from '@/stores/modalsManagement.js'
 import { computed, ref, watch } from 'vue'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const toastManagement = toastManagementStore()
 const funnelsManagement = funnelsManagementStore()

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.js'
 
 export const userConfigStore = defineStore('userConfig', () => {
     const userConfig = ref({
@@ -67,15 +67,4 @@ export const userConfigStore = defineStore('userConfig', () => {
       setUserviewPortWith,
       userWidth
     }
-  },
-  {
-    persist: {
-      enabled: true,
-      strategies: [
-        {
-          key: 'userConfig', // Nome da chave no localStorage
-          storage: localStorage // Tipo de armazenamento
-        }
-      ]
-    }
-  })
+  }, { persist: true })

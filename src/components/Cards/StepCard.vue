@@ -1,12 +1,12 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { toastManagementStore } from '@/stores/toastManagement.ts'
-import { stepsManagementStore } from '@/stores/stepsManagement.ts'
-import { contactsManagementStore } from '@/stores/contactsManagement.ts'
+import { toastManagementStore } from '@/stores/toastManagement.js'
+import { stepsManagementStore } from '@/stores/stepsManagement.js'
+import { contactsManagementStore } from '@/stores/contactsManagement.js'
 import ContactCard from '@/components/Cards/ContactCard.vue'
 import EmptyStepCard from '@/components/Cards/EmptyStepCard.vue'
 import draggable from 'vuedraggable'
-import { userConfigStore } from '@/stores/userConfigManagement.ts'
+import { userConfigStore } from '@/stores/userConfigManagement.js'
 
 const props = defineProps({
   stepInfo: { type: Object, required: true }
