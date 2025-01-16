@@ -193,7 +193,6 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
       stepsManagementState.value.push(payload.value)
     }
 
-    console.log("Steps Store: ", stepsManagementState.value)
   }
 
 
