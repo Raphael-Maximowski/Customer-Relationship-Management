@@ -12,10 +12,6 @@ const redirectToMainPage = () => {
   router.push({ name: 'ReportsView' })
 }
 
-onMounted(() => {
-  console.log("UserColor: ", userColorData.value)
-})
-
 </script>
 
 <template>

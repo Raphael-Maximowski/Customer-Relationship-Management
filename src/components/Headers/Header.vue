@@ -89,12 +89,12 @@ const RouterOptions = [
       },
       {
         name: 'Reports',
-        routeName: '',
+        routeName: 'ReportsView',
         icon: 'bi bi-file-earmark-plus-fill',
         id: 3
       },
       {
-        name: 'Favorites',
+        name: 'Favorites', 
         routeName: 'FavoriteListView',
         icon: 'bi bi-pin-angle-fill',
         id: 4

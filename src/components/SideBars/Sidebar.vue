@@ -25,8 +25,6 @@ const handleDropUpState = () => {
 }
 
 const handleSideBarRoute = (routeToPush: routeInterface) => {
-  console.log("Route: ", routeToPush)
-
   router.push({ name: routeToPush.routeName })
 }
 
