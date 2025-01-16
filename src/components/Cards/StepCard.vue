@@ -45,9 +45,6 @@ const handleEditStepState = () => {
   editStepState.value = !editStepState.value
 }
 
-onMounted(() => {
-  console.log("Props: ", props.stepInfo)
-})
 
 watch(contactsOriginalState, (newValue) => {
   contactsData.value = contactsStore.getFilteredContacts(props.stepInfo.id)

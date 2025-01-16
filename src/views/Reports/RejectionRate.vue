@@ -28,7 +28,6 @@ const config = {
 
 const getReportsData = () => {
   funnelsReportData.value = funnelStore.totalRejectionFromFunnels()
-  console.log("Data Return: ", funnelsReportData.value)
 
   data.value.labels = funnelsReportData.value.labels
   data.value.datasets[0].data = funnelsReportData.value.rejectedContacts

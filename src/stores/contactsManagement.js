@@ -230,7 +230,6 @@ export const contactsManagementStore = defineStore('contactsManagementStore', ()
 
     contactsState.value.push(contactToPush.value)
     toastStore.succesToast("Contact created with succes!")
-    console.log("Contact Created: ", contactToPush.value)
   }
 
   const updateContact = (contactPayload) => {
