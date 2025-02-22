@@ -48,9 +48,10 @@ const searchAction = () => {
 }
 
 
-const mobileHeaderState = ref(false)
+const mobileHeaderState = computed(() =>  headerStore.headerMobileStateGetter)
 const handleMobileHeaderState = () => {
-  mobileHeaderState.value = !mobileHeaderState.value
+
+  headerStore.setHeaderMobileState(!mobileHeaderState.value)
 }
 
 const dispatchButtonAction = async () => {
@@ -94,7 +95,7 @@ const RouterOptions = [
         id: 3
       },
       {
-        name: 'Favorites', 
+        name: 'Favorites',
         routeName: 'FavoriteListView',
         icon: 'bi bi-pin-angle-fill',
         id: 4
@@ -150,7 +151,7 @@ const RouterOptions = [
   </div>
 
   <div v-else >
-    <div :class="['flex-column  text-center d-flex align-items-center justify-content-center mobile-header', userColorData.color]">
+    <div :class="['flex-column  text-center d-flex align-items-center position-relative justify-content-center mobile-header', userColorData.color]">
       <h1 class="text-white title">CUSTOMER RELATIONSHIP</h1>
       <h2 class="text-white sub-title">MANAGEMENT</h2>
       <button style="top: 10px; left: 10px" class="position-absolute border-0 bg-transparent">
@@ -160,7 +161,7 @@ const RouterOptions = [
     <div v-if="!mobileHeaderState" class="button-container  mt-3  w-100">
       <button v-if="headerConfigData.buttonMessage" @click="dispatchButtonAction" type="button" :class="['ms-5 btn px-5 text-white', userColorData.btn]"> {{ headerConfigData.buttonMessage }} </button>
     </div>
-    <div v-if="mobileHeaderState" :class="['d-flex align-items-center flex-column mobile-header-body position-absolute w-100 z-3', userColorData.color]">
+    <div v-if="mobileHeaderState" :class="['d-flex align-items-center flex-column mobile-header-body position-fixed w-100 z-3', userColorData.color]">
       <div class="w-75">
         <div
           :key="routerOption.id"
@@ -217,6 +218,6 @@ const RouterOptions = [
 }
 
 .header-desktop {
-  height: 145px;
+  min-height: 145px;
 }
 </style>

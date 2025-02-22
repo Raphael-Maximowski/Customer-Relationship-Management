@@ -8,10 +8,10 @@ import { headerManagementStore } from '@/stores/headerManagement.js'
 import { stepsManagementStore } from '@/stores/stepsManagement.js'
 
 const userConfig = userConfigStore()
-const stepStore = stepsManagementStore()
 const headerStore = headerManagementStore()
 const userColorData = computed(() => userConfig.userColorData)
 const userConfigWidth = computed(() => userConfig.userWidth)
+const headerStateInMobile = computed(() => headerStore.headerMobileStateGetter)
 const route = useRoute()
 
 const updateUserViewPort = () => {
@@ -28,6 +28,28 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateUserViewPort);
 })
 
+const preventScroll = (e: Event) => {
+  e.preventDefault();
+};
+
+const preventArrowScroll = (e: KeyboardEvent) => {
+  if (['ArrowUp', 'ArrowDown', ' '].includes(e.key)) {
+    e.preventDefault();
+  }
+};
+
+watch(headerStateInMobile, (newValue) => {
+  if (newValue) {
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('keydown', preventArrowScroll);
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+    return
+  }
+
+  window.removeEventListener('wheel', preventScroll);
+  window.removeEventListener('keydown', preventArrowScroll);
+  window.removeEventListener('touchmove', preventScroll);
+})
 
 watch(route, (newRoute) => {
   switch (newRoute.name){

@@ -20,10 +20,6 @@ const handleSideBarState = () => {
   sideBarState.value = !sideBarState.value
 }
 
-const handleDropUpState = () => {
-  dropUpState.value = !dropUpState.value
-}
-
 const handleSideBarRoute = (routeToPush: routeInterface) => {
   router.push({ name: routeToPush.routeName })
 }

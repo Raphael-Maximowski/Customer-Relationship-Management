@@ -9,7 +9,9 @@ export const funnelsManagementStore = defineStore('funnelsManagement', () => {
   const stepsStore = stepsManagementStore()
 
   const funnelsData = ref([
-    { name: 'Funnel Example', description: 'Created as a Example', id: 1, date: '10/09/2024' }
+    { name: 'Primary Funnel', description: 'Created as a Example', id: 1, date: '10/09/2024' },
+    { name: 'Secondary Funnel', description: 'Created as a Example', id: 2, date: '23/09/2024' },
+    { name: 'Tertiary Funnel', description: 'Created as a Example', id: 3, date: '01/09/2024' },
     ]
   )
 

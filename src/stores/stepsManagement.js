@@ -12,6 +12,16 @@ export const stepsManagementStore = defineStore('stepsManagement', () => {
     { name: 'Contact Made', id: 2, funnelId: 1, stepPostion: 1 },
     { name: 'Accepted', id: 3, funnelId: 1, stepPostion: 2 },
     { name: 'Rejected', id: 4, funnelId: 1, stepPostion: 3 },
+
+    { name: 'No Contact', id: 5, funnelId: 2, stepPostion: 0 },
+    { name: 'Contact Made', id: 6, funnelId: 2, stepPostion: 1 },
+    { name: 'Accepted', id: 7, funnelId: 2, stepPostion: 2 },
+    { name: 'Rejected', id: 8, funnelId: 2, stepPostion: 3 },
+
+    { name: 'No Contact', id: 8, funnelId: 3, stepPostion: 0 },
+    { name: 'Contact Made', id: 10, funnelId: 3, stepPostion: 1 },
+    { name: 'Accepted', id: 11, funnelId: 3, stepPostion: 2 },
+    { name: 'Rejected', id: 12, funnelId: 3, stepPostion: 3 },
   ])
 
   const findSuccessStepsFromFunnel = (funnelId) => {

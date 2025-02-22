@@ -6,13 +6,13 @@ export const userConfigStore = defineStore('userConfig', () => {
     const userConfig = ref({
       viewPortWidth: 0,
       color: {
-        color: 'bg-primary',
-        name: 'Blue',
-        btn: 'btn-primary',
-        emptyBtn: 'btn-outline-primary',
-        hexa: '#0D6EFD',
-        text: 'text-primary',
-        textName: 'Blue'
+        color: 'bg-dark',
+        name: 'Dark',
+        btn: 'btn-dark',
+        emptyBtn: 'btn-outline-dark',
+        hexa: '#212529',
+        text: 'text-dark',
+        textName: 'Dark'
       },
       userName: 'User',
       messageToSend: '',

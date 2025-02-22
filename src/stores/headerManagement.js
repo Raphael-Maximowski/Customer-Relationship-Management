@@ -7,10 +7,16 @@ export const headerManagementStore = defineStore('headerManagement', () => {
     inputMessage: '',
     headerMessage: '',
     action: '',
-    searchType: ''
+    searchType: '',
+    mobileHeaderState: false
   })
 
   const headerDataGetter = computed(() => headerDataState.value)
+  const headerMobileStateGetter = computed(() => headerDataState.value.mobileHeaderState)
+
+  const setHeaderMobileState =(state) => {
+    headerDataState.value.mobileHeaderState = state
+  }
 
   const setHeaderData = (payload) => {
     headerDataState.value = {
@@ -22,5 +28,5 @@ export const headerManagementStore = defineStore('headerManagement', () => {
     }
   }
 
-  return { setHeaderData, headerDataGetter }
+  return { setHeaderData, headerDataGetter, setHeaderMobileState, headerMobileStateGetter }
 })
